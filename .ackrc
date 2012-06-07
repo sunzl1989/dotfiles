@@ -1,0 +1,8 @@
+--type-set
+less=.less
+--type-set
+stylus=.styl
+--type-set
+haml=.haml,html.haml
+--type-set
+slim=.slim

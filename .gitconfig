@@ -1,0 +1,38 @@
+[core]
+  excludesfile = ~/.gitignore_global
+[web]
+  browser = open
+[alias]
+  s    = status
+  cm   = commit
+  c    = !git add . && git commit -a && git push
+  fuck = !git commit --amend && git push --force
+  br   = branch
+  co   = checkout
+  d    = diff
+  l    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  who  = shortlog -s -n --
+  get  = !git clone git@git.lipsiasoft.com:/$1.git
+  open = !open http://$(basename $(pwd)).lipsiasoft.biz
+  go   = checkout -B
+[color]
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local   = yellow
+  remote  = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old  = red bold
+  new  = green bold
+[color "status"]
+  added     = yellow
+  changed   = green
+  untracked = cyan
+[merge]
+  log = true
+[url "git@github.com:/"]
+  insteadOf = "gh:/"
+[url "git@git.lipsiasoft.com:/"]
+  insteadOf = "lp:"

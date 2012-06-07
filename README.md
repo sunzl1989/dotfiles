@@ -1,0 +1,90 @@
+# DAddYE's dotfiles
+
+Here my dotfiles, different than others repos, this is though for people that love hacking vim and osx
+from a terminal.
+
+## Installation
+
+```bash
+git clone https://github.com/DAddYE/dotfiles.git && cd dotfiles && ./bootstrap.sh
+```
+
+To update, `cd` into your local `dotfiles` repository and then:
+
+```bash
+./bootstrap
+```
+
+Alternatively, to update while avoiding the confirmation prompt:
+
+```bash
+./bootstrap
+```
+
+This also boostrap your vim, with sensible defaults for your terminal!
+
+### Add custom commands without creating a new fork
+
+If `~/.bash_custom` exists, it will be sourced along with the other files.
+You can use this to add a few custom commands without the need to fork this entire repository,
+or to add commands you don’t want to commit to a public repository.
+
+My `~/.bash_custom` looks something like this:
+
+```bash
+# PATH additions
+export PATH="~/bin:$PATH"
+
+# Git/Npm credentials
+# Not in the repository, to prevent people from accidentally committing under my name
+GIT_AUTHOR_NAME="Davide D'Agostino"
+GIT_AUTHOR_EMAIL="d.dagostino@lipsiasoft.com"
+GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+git config --global user.name "$GIT_AUTHOR_NAME"
+git config --global user.email "$GIT_AUTHOR_EMAIL"
+
+npm config set email d.dagostino@lipsiasoft.com
+```
+
+## Sensible OS X defaults
+
+When setting up a new Mac, you may want to set some sensible OS X defaults:
+
+```bash
+./.osx_defaults
+```
+
+If you like my defaults you can avoid prompt with
+
+```bash
+./.osx_defaults -s
+```
+
+## Extras
+
+### Maybe better if you install from [brew](https://github.com/mxcl/homebrew)
+
+```bash
+brew install macvim --custom-icons --override-system-vim
+brew install node ack bash git tmux wget sshfs ssh-copy-id
+```
+
+### Iterm2
+
+Since `iTerm2` is much much more faster than `Terminal.app` I highly suggest to [install it](https://github.com/gnachman/iTerm2)
+
+Is free and opensource
+
+### Colors
+
+Vim has a nice new [Tomorrow Theme](https://github.com/chriskempson/vim-tomorrow-theme/tree/dev/colors), but to see correctly colors
+like with [solarized](https://github.com/altercation/solarized) I suggest to install color profile to your terminal from `extra` folder.
+
+## Thanks to
+
+[Mathias Bynens](https://github.com/mathiasbynens) Heavily based on it's dotfiles
+
+## Author
+
+DAddYE, you can follow me on twitter [@daddye](http://twitter.com/daddye) or take a look at my site [daddye.it](http://www.daddye.it)
