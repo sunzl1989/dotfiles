@@ -1,6 +1,6 @@
 require File.expand_path('../bundle.rb', __FILE__)
 
-bundle 'tomorrow',    'DAddYE/vim-tomorrow-theme'
+bundle 'tomorrow',    'DAddYE/tomorrow.vim'
 bundle 'nerdtree',    'scrooloose/nerdtree'
 bundle 'cmdp',        'kien/ctrlp.vim'
 bundle 'powerline',   'Lokaltog/vim-powerline'

@@ -3,6 +3,14 @@
 Here my dotfiles, different than others repos, this is though for people that love hacking vim and osx
 from a terminal.
 
+### MacVim
+
+![MacVim Version](http://f.cl.ly/items/3a2H2O2T2X3A390o063T/tomorrow.macvim.png)
+
+### Terminal Version
+
+![Termnal Version](http://f.cl.ly/items/2F2T3U1U080m2M1k110B/tomorrow.term.png)
+
 ## Installation
 
 ```bash
@@ -80,6 +88,10 @@ Is free and opensource
 
 Vim has a nice new [Tomorrow Theme](https://github.com/chriskempson/vim-tomorrow-theme/tree/dev/colors), but to see correctly colors
 like with [solarized](https://github.com/altercation/solarized) I suggest to install color profile to your terminal from `extra` folder.
+
+### Fonts
+
+Under `extras/fonts` you can find some of my preferred fixed-width fonts for your terminal, patched for `powerline` fancy.
 
 ## Thanks to
 
