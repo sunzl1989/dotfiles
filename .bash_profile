@@ -48,6 +48,10 @@ if which rbenv > /dev/null; then
   eval "$(rbenv init -)";
 fi
 
+if which npm > /dev/null; then
+  eval "$(npm completion -)"
+fi
+
 # Brew stuff
 if which brew > /dev/null; then
   [ -f $(brew --prefix)/etc/bash_completion ] && source $(brew --prefix)/etc/bash_completion
