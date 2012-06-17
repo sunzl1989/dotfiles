@@ -44,13 +44,12 @@ export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
 
 # RBENV setup
-if [ -d ~/.rbenv ]; then
-  export PATH="~/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
+if which rbenv > /dev/null; then
+  eval "$(rbenv init -)";
 fi
 
 # Brew stuff
-if [ -f /usr/local/bin/brew ]; then
+if which brew > /dev/null; then
   [ -f $(brew --prefix)/etc/bash_completion ] && source $(brew --prefix)/etc/bash_completion
 fi
 
