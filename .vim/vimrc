@@ -123,6 +123,9 @@ au FileType make set noexpandtab " make uses real tabs"
 " Thorfile, Rakefile, GuardFile, Vagrantfile and Gemfile are Ruby
 au BufRead,BufNewFile {Gemfile,Rakefile,Guardfile,Vagrantfile,Thorfile,Do,dorc,Dofile,config.ru} set ft=ruby
 
+" Be sure to don't open markdown files with modula2 syntax
+au BufRead,BufNewFile *.md set ft=markdown
+
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
 
