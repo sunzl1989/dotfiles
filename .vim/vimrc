@@ -36,7 +36,6 @@ set incsearch
 set ignorecase
 set smartcase
 set laststatus=2
-" set visualbell "No sounds please!!!
 
 set clipboard+=unnamed " Share your clipboard with system
 set mouse=a            " Make mouse working!
@@ -91,7 +90,7 @@ filetype plugin indent on      " load the plugin and indent settings for the det
 " runtime! macros/matchit.vim  " % to bounce from do to end etc.
 
 " Change mapleader
-let mapleader=","
+" let mapleader=","
 
 " Verical bar in insert mode (for iTerm users only)
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -108,6 +107,11 @@ let g:task_paper_date_format = "%d/%m/%y %H:%M"
 
 " Ctrlp
 let g:ctrlp_working_path_mode = 0
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+  \ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\|\.DS_Store'
+  \ }
+
 
 " remember last location in file, but not for commit messages.
 au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
@@ -156,58 +160,11 @@ let NERDTreeDirArrows   = 0
 let NERDTreeChDirMode   = 2
 let NERDTreeIgnore      = ['\.pyc$', '\.rbc$', '\~$']
 let NERDTreeHijackNetrw = 0
+let g:nerdtree_tabs_open_on_console_startup=1
 ca cd NERDTree
 
-augroup AuNERDTreeCmd
-  au VimEnter    * call s:CdIfDirectory(expand("<amatch>"))
-  au FocusGained * call s:UpdateNERDTree()
-augroup END
-
-" If the parameter is a directory, cd into it
-function s:CdIfDirectory(directory)
-  let explicitDirectory = isdirectory(a:directory)
-  let directory = explicitDirectory || empty(a:directory)
-
-  if explicitDirectory
-    exe "cd " . fnameescape(a:directory)
-  endif
-
-  " Allows reading from stdin
-  " ex: git diff | mvim -R -
-  if strlen(a:directory) == 0
-    return
-  endif
-
-  if directory
-    NERDTree
-    wincmd p
-    bd
-  endif
-
-  if explicitDirectory
-    wincmd p
-  endif
-endfunction
-
-" NERDTree utility function
-function s:UpdateNERDTree(...)
-  let stay = 0
-
-  if(exists("a:1"))
-    let stay = a:1
-  end
-
-  if exists("t:NERDTreeBufName")
-    let nr = bufwinnr(t:NERDTreeBufName)
-    if nr != -1
-      exe nr . "wincmd w"
-      exe substitute(mapcheck("R"), "<CR>", "", "")
-      if !stay
-        wincmd p
-      end
-    endif
-  endif
-endfunction
+" Macvim from here
+let macvim_hig_shift_movement = 1
 
 " Shortcuts
 imap <C-w> <Esc><C-w> " move through windows in insert mode
