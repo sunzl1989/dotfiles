@@ -169,6 +169,42 @@ ca cd NERDTree
 " Macvim from here
 let macvim_hig_shift_movement = 1
 
+" Chdir if we use vim ../my/path
+augroup AuNERDTreeCmd
+  au VimEnter * call s:CdIfDirectory(expand("<amatch>"))
+  au FocusGained * call s:UpdateNERDTree()
+augroup END
+
+" If the parameter is a directory, cd into it
+function s:CdIfDirectory(directory)
+  let explicitDirectory = isdirectory(a:directory)
+  let directory = explicitDirectory || empty(a:directory)
+
+  if explicitDirectory
+    exe "cd " . fnameescape(a:directory)
+  endif
+endfunction
+
+" NERDTree utility function
+function s:UpdateNERDTree(...)
+  let stay = 0
+
+  if(exists("a:1"))
+    let stay = a:1
+  end
+
+  if exists("t:NERDTreeBufName")
+    let nr = bufwinnr(t:NERDTreeBufName)
+    if nr != -1
+      exe nr . "wincmd w"
+      exe substitute(mapcheck("R"), "<CR>", "", "")
+      if !stay
+        wincmd p
+      end
+    endif
+  endif
+endfunction
+
 " Shortcuts
 imap <C-w> <Esc><C-w> " move through windows in insert mode
 imap <C-v> <Esc><C-v> " allow block selection in insert mode
