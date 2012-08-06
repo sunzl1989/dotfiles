@@ -208,10 +208,6 @@ if ask "Make Dock icons of hidden applications translucent" Y; then
   defaults write com.apple.dock showhidden -bool true
 fi
 
-if ask "Enable iTunes track notifications in the Dock" Y; then
-  defaults write com.apple.dock itunes-notifications -bool true
-fi
-
 if ask "Enable highlight hover effect for the grid view of a stack (Dock)" Y; then
   defaults write com.apple.dock mouse-over-hilte-stack -bool true
 fi
@@ -316,6 +312,10 @@ fi
 if ask "Disable send and reply animations in Mail.app" Y; then
   defaults write com.apple.Mail DisableReplyAnimations -bool true
   defaults write com.apple.Mail DisableSendAnimations -bool true
+fi
+
+if ask "Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app" Y; then
+  defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\\U21a9"
 fi
 
 if ask "Copy email address without brackets" Y; then
