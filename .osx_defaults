@@ -79,6 +79,10 @@ if ask "Remove slow animations when holding shift" Y; then
   defaults write NSGlobalDomain FXEnableSlowAnimation -bool false
 fi
 
+if ask "Disable automatic termination of inactive apps" Y; then
+  defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
+fi
+
 if ask "Expand save panel by default" Y; then
   defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 fi
@@ -132,6 +136,11 @@ if ask "Show remaining battery time; hide percentage" N; then
   defaults write com.apple.menuextra.battery ShowTime -string "YES"
 fi
 
+if ask "Require password immediately after sleep or screen saver begins" Y; then
+  defaults write com.apple.screensaver askForPassword -int 1
+  defaults write com.apple.screensaver askForPasswordDelay -int 0
+fi
+
 if ask "Allow quitting Finder via ⌘ +Q; doing so will also hide desktop icons" Y; then
   defaults write com.apple.finder QuitMenuItem -bool true
 fi
@@ -176,11 +185,15 @@ if ask "Remove Dropbox’s green checkmark icons in Finder" Y; then
     unset file
 fi
 
+if ask "Save to disk (not to iCloud) by default" Y; then
+  defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+fi
+
 if ask "Show item info below desktop icons" Y; then
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 fi
 
-if ask "Enable snap-to-grid for desktop icons" Y; then
+if ask "Enable snap-to-grid for desktop icons" N; then
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 fi
 
@@ -206,6 +219,10 @@ fi
 
 if ask "Make Dock icons of hidden applications translucent" Y; then
   defaults write com.apple.dock showhidden -bool true
+fi
+
+if ask "Enable iTunes track notifications in the Dock" Y; then
+  defaults write com.apple.dock itunes-notifications -bool true
 fi
 
 if ask "Enable highlight hover effect for the grid view of a stack (Dock)" Y; then
@@ -293,6 +310,14 @@ if ask "Enable only Safari resume" Y; then
   defaults write com.apple.Safari NSQuitAlwaysKeepsWindows -bool true
 fi
 
+if ask "Enable debug menu in safary" Y; then
+  defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+fi
+
+if ask "Add a context menu item for showing the Web Inspector in web views" Y; then
+  defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+fi
+
 if ask "Only use UTF-8 in Terminal.app" Y; then
   defaults write com.apple.terminal StringEncodings -array 4
 fi
@@ -312,10 +337,6 @@ fi
 if ask "Disable send and reply animations in Mail.app" Y; then
   defaults write com.apple.Mail DisableReplyAnimations -bool true
   defaults write com.apple.Mail DisableSendAnimations -bool true
-fi
-
-if ask "Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app" Y; then
-  defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\\U21a9"
 fi
 
 if ask "Copy email address without brackets" Y; then
