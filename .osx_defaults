@@ -335,8 +335,12 @@ if ask "Make ⌘ +F focus the search input in iTunes" Y; then
 fi
 
 if ask "Disable send and reply animations in Mail.app" Y; then
-  defaults write com.apple.Mail DisableReplyAnimations -bool true
-  defaults write com.apple.Mail DisableSendAnimations -bool true
+  defaults write com.apple.mail DisableReplyAnimations -bool true
+  defaults write com.apple.mail DisableSendAnimations -bool true
+fi
+
+if ask "Disable inline attachment preview" Y; then
+  defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 fi
 
 if ask "Copy email address without brackets" Y; then
