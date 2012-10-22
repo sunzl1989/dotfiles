@@ -14,8 +14,8 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Set computer name (as done via System Preferences → Sharing)
 user=$(whoami)
-sudo scutil --set ComputerName "$user's Air"
-sudo scutil --set HostName "$user's Air"
+sudo scutil --set ComputerName "$user's Retina"
+sudo scutil --set HostName "$user's Retina"
 sudo scutil --set LocalHostName "$user"
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$user"
 
@@ -499,7 +499,7 @@ defaults write com.twitter.twitter-mac HideInBackground -bool true
 ###############################################################################
 
 for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" \
-	"Mail" "Safari" "SizeUp" "SystemUIServer" "Terminal" "Transmission" \
+	"Mail" "Safari" "SizeUp" "SystemUIServer" "Transmission" \
 	"Twitter" "iCal" "iTunes"; do
 	killall "$app" > /dev/null 2>&1
 done
