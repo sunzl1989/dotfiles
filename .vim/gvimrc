@@ -1,11 +1,13 @@
 set anti
 set guioptions=gemc " egmrt
-set guifont=Source\ Code\ Pro\ For\ Powerline:h12
+set guifont=Source\ Code\ Pro\ for\ Powerline:h12
 set vb
 
+" NerdTree Tabs
+let g:nerdtree_tabs_open_on_gui_startup=0
+
 " Colors & C.
-set background=dark
-colorscheme tomorrow
+" colorscheme soda
 
 " set transparency=5
 

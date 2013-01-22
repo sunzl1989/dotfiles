@@ -1,0 +1,7 @@
+#!/bin/bash
+files=$(find . \( -path './.git' -o -name 'bootstrap' -o -name 'README.md' -o -name 'update' \) -prune -o -type f -print)
+
+for file in $files; do
+  hfile=${file/./~}
+  cp -v $hfile $file
+done

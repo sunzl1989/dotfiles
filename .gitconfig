@@ -10,11 +10,19 @@
   br   = branch
   co   = checkout
   d    = diff
-  l    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  l    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue(%cr)%Cgreen[%cN]%Creset' --abbrev-commit --date=relative
   who  = shortlog -s -n --
   get  = !git clone git@git.lipsiasoft.com:/$1.git
   open = !open http://$(basename $(pwd)).lipsiasoft.biz
   go   = checkout -B
+  switch    = !legit switch \"$@\"
+  branches  = !legit branches
+  sprout    = !legit sprout \"$@\"
+  unpublish = !legit unpublish \"$@\"
+  harvest   = !legit harvest \"$@\"
+  sync      = !legit sync \"$@\"
+  publish   = !legit publish \"$@\"
+  graft     = !legit graft \"$@\"
 [color]
   ui = auto
 [color "branch"]
@@ -32,7 +40,20 @@
   untracked = cyan
 [merge]
   log = true
+	tool = vimdiff
 [url "git@github.com:/"]
   insteadOf = "gh:/"
-[url "git@git.lipsiasoft.com:/"]
-  insteadOf = "lp:"
+[user]
+	name = Davide D'Agostino
+	email = info@daddye.it
+[push]
+	default = simple
+[gist]
+	private = true
+	browse = false
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[apply]
+	ignorewhitespace = change

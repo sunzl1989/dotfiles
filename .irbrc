@@ -28,8 +28,3 @@ def ls(obj=self)
     puts pattern % meths
   end
 end
-
-# reload this .irbrc
-def IRB.reload
-  load __FILE__
-end

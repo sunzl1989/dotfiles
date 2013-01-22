@@ -36,6 +36,8 @@ bundle 'nginx',         'andersjanmyr/nginx-vim-syntax'
 bundle 'unimpaired',    'tpope/vim-unimpaired'
 bundle 'guides',        'nathanaelkane/vim-indent-guides'
 bundle 'rails',         'tpope/vim-rails'
+bundle 'golang',        'jnwhiteh/vim-golang'
+bundle 'scala',         'derekwyatt/vim-scala'
 
 bundle 'ar.snippets' do
   sh 'mkdir -p snippets/ruby'
