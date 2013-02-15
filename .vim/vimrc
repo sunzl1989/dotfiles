@@ -67,6 +67,7 @@ set esckeys " Allow cursor keys in insert mode
 set ttyfast " Optimize for fast terminal connections
 set isk+=_,$,@,%,#,- " none word dividers
 
+set cryptmethod=blowfish " https://coderwall.com/p/hypjbg
 
 " Time out on key codes but not mappings.
 " Basically this makes terminal Vim work sanely.
@@ -132,7 +133,7 @@ au FileType make set noexpandtab " make uses real tabs"
 au BufRead,BufNewFile {Gemfile,Rakefile,Guardfile,Vagrantfile,Thorfile,Do,dorc,Dofile,config.ru} set ft=ruby
 
 " Be sure to don't open markdown files with modula2 syntax
-au BufRead,BufNewFile *.md set ft=markdown
+" au BufRead,BufNewFile *.md set ft=markdown
 
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
@@ -154,10 +155,10 @@ let g:syntastic_quiet_warnings = 1
 let g:JSLintHighlightErrorLine = 0
 
 " Powerline
-let g:Powerline_symbols       = 'fancy'
+" let g:Powerline_symbols       = 'fancy'
 let g:Powerline_cache_enabled = 0
-let g:Powerline_theme         = 'solarized256'
-let g:Powerline_colorscheme   = 'solarized256'
+" let g:Powerline_theme         = 'solarized256'
+" let g:Powerline_colorscheme   = 'solarized256'
 
 " Stop fucking netrw
 let g:netrw_silent = 1

@@ -1,5 +1,4 @@
 # Here my private stuff
-# [ -r ~/.bash_colors ] && source ~/.bash_colors
 [ -r ~/.bash_custom ] && source ~/.bash_custom
 
 # Set Lang
@@ -13,15 +12,12 @@ function parse_git_dirty {
 function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)] /"
 }
-export PS1='\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]$\[\033[00m\] '
-# PS1="\W \[\033[01;34m\]$ \[\033[00m\]"
+
+export PS1='\033[G\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]$\[\033[00m\] '
 
 # Utilities
-alias ls="ls -alh"
+alias ls="ls -alhG"
 # alias tail="tail -f -n 150"
-alias ..="cd .."
-alias ...="cd ../.."
-alias ~="cd ~" # `cd` is probably faster to type though
 alias update="sudo softwareupdate -i -a -v; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; gem update; cd ~/.vim && rake && cd -"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias cleanup.ds_store="find . -type f -name '*.DS_Store' -ls -delete"
@@ -44,7 +40,10 @@ export GOROOT="/usr/local/Cellar/go/1.0.3"
 export GOBIN="$GOROOT/bin"
 
 # Java
+export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+export JRUBY_HOME="/Users/DAddYE/.rbenv/versions/jruby-1.7.2"
+
 if which drip > /dev/null; then
   export JAVACMD=$(which drip)
 fi
@@ -58,10 +57,21 @@ export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$GOBIN:$PAT
 # Node Modules
 # export NODE_PATH="/usr/local/share/lib/node_modules"
 
+# Mov to Gif
+gify() {
+  if [[ -n "$1" && -n "$2" ]]; then
+    ffmpeg -i $1 -pix_fmt rgb24 temp.gif
+    convert -layers Optimize temp.gif $2
+    rm temp.gif
+  else
+    echo "proper usage: gify <input_movie.mov> <output_file.gif>. You DO need to include extensions."
+  fi
+}
+
 # Colorize
 export CLICOLOR=1
 
-# Larger bash history (allow 32ÃÂ³ entries; default is 500)
+# Larger bash history
 export HISTSIZE=32768
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
@@ -75,20 +85,12 @@ export RUBY_HEAP_SLOTS_INCREMENT=1000000
 export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=100000000
 export RUBY_HEAP_FREE_MIN=500000
+export RAILS_ENV=development
+export RACK_ENV=development
 
 # RBENV setup
 if which rbenv > /dev/null; then
   eval "$(rbenv init -)"
-fi
-
-if which ruby-build > /dev/null; then
-  export CONFIGURE_OPTS="\
-    --disable-install-doc \
-    --with-readline-dir=$(brew --prefix readline) \
-    --with-openssl-dir=$(brew --prefix openssl)
-    --with-yaml-dir=$(brew --prefix yaml) \
-    --with-gdbm-dir=$(brew --prefix gdbm) \
-    --with-libffi-dir=$(brew --prefix libffi)"
 fi
 
 if which npm > /dev/null; then
@@ -102,10 +104,16 @@ fi
 # Brew stuff
 if which brew > /dev/null; then
   [ -f $(brew --prefix)/etc/bash_completion ] && source $(brew --prefix)/etc/bash_completion
+  if which ruby-build > /dev/null; then
+    export CONFIGURE_OPTS="\
+      --disable-install-doc \
+      --with-readline-dir=$(brew --prefix readline) \
+      --with-openssl-dir=$(brew --prefix openssl)
+      --with-yaml-dir=$(brew --prefix yaml) \
+      --with-gdbm-dir=$(brew --prefix gdbm) \
+      --with-libffi-dir=$(brew --prefix libffi)"
+  fi
 fi
-
-# Add tab completion for `defaults read|write`
-# complete -W "NSGlobalDomain  $(find {,~}/Library/Preferences -type f -name '*.plist' -exec basename {} '.plist' \;)" defaults
 
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Finder Dock Mail Safari iTunes iCal Address\ Book SystemUIServer" killall
