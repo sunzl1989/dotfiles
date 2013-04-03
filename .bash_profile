@@ -1,5 +1,5 @@
 # Here my private stuff
-[ -r ~/.bash_custom ] && source ~/.bash_custom
+[ -r ~/.bash_custom ]  && source ~/.bash_custom
 
 # Set Lang
 export LC_ALL="en_US.UTF-8"
@@ -13,7 +13,16 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)] /"
 }
 
-export PS1='\033[G\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]$\[\033[00m\] '
+function findpid {
+  ps aux | grep $1 | awk '{print $2}'
+}
+
+function killmatch {
+  pid=$1; shift
+  findpid $pid | xargs kill "$@"
+}
+
+export PS1='\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]$\[\033[00m\] '
 
 # Utilities
 alias ls="ls -alhG"
@@ -36,13 +45,16 @@ export EDITOR="vim"
 export PATH="/usr/local/mysql/bin:$PATH"
 
 # Go
-export GOROOT="/usr/local/Cellar/go/1.0.3"
-export GOBIN="$GOROOT/bin"
+export GOPATH="/usr/src/go"
 
 # Java
 export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 export JRUBY_HOME="/Users/DAddYE/.rbenv/versions/jruby-1.7.2"
+
+# Allow insecure downloads
+export HTTP_CLIENT="wget --no-check-certificate -O" # or
+export HTTP_CLIENT="curl --insecure -f -L -o"
 
 if which drip > /dev/null; then
   export JAVACMD=$(which drip)
@@ -52,10 +64,7 @@ fi
 export RBXOPT=-X19
 
 # Local (s)bin
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$GOBIN:$PATH"
-
-# Node Modules
-# export NODE_PATH="/usr/local/share/lib/node_modules"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:/Users/DAddYE/Library/Python/2.7/bin:$GOPATH/bin:$PATH"
 
 # Mov to Gif
 gify() {
@@ -71,13 +80,14 @@ gify() {
 # Colorize
 export CLICOLOR=1
 
+# Colored grep
+export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;33'
+
 # Larger bash history
 export HISTSIZE=32768
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
-
-# Fontforge
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 
 # Ruby
 export RUBY_HEAP_MIN_SLOTS=1000000
@@ -88,32 +98,16 @@ export RUBY_HEAP_FREE_MIN=500000
 export RAILS_ENV=development
 export RACK_ENV=development
 
-# RBENV setup
-if which rbenv > /dev/null; then
-  eval "$(rbenv init -)"
-fi
-
-if which npm > /dev/null; then
-  eval "$(npm completion -)"
-fi
-
-if which grunt > /dev/null; then
-  eval "$(grunt --completion=bash)"
-fi
+# Detective
+[[ `which rbenv` ]] && eval "$(rbenv init -)"
+[[ `which npm` ]] && eval "$(npm completion -)"
+[[ `which grunt` ]] && eval "$(grunt --completion=bash)"
+[[ `which bower` ]] && eval "$(bower completion)"
 
 # Brew stuff
 if which brew > /dev/null; then
   [ -f $(brew --prefix)/etc/bash_completion ] && source $(brew --prefix)/etc/bash_completion
-  if which ruby-build > /dev/null; then
-    export CONFIGURE_OPTS="\
-      --disable-install-doc \
-      --with-readline-dir=$(brew --prefix readline) \
-      --with-openssl-dir=$(brew --prefix openssl)
-      --with-yaml-dir=$(brew --prefix yaml) \
-      --with-gdbm-dir=$(brew --prefix gdbm) \
-      --with-libffi-dir=$(brew --prefix libffi)"
-  fi
+  [ -f $(brew --prefix)/etc/profile.d/z.sh ]  && source $(brew --prefix)/etc/profile.d/z.sh
+  # For ruby-build
+  export CONFIGURE_OPTS="--disable-install-doc"
 fi
-
-# Add `killall` tab completion for common apps
-complete -o "nospace" -W "Finder Dock Mail Safari iTunes iCal Address\ Book SystemUIServer" killall

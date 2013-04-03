@@ -95,6 +95,9 @@ let g:indent_guides_enable_on_vim_startup=0
 filetype plugin indent on      " load the plugin and indent settings for the detected filetype
 " runtime! macros/matchit.vim  " % to bounce from do to end etc.
 
+" Disable markdown floading
+let g:vim_markdown_folding_disabled=1
+
 " Change mapleader
 " let mapleader=","
 
@@ -147,6 +150,11 @@ augroup Nginx
   au BufRead,BufNewFile /opt/nginx/conf/* set ft=nginx
 augroup END
 
+" clojure completions
+" augroup Clojure
+"   au Bufenter,Bufnewfile *.clj setl complete+=k~/.clj_completions
+" augroup END
+
 " Enable syntastic syntax checking
 let g:syntastic_enable_signs   = 1
 let g:syntastic_quiet_warnings = 1
@@ -157,8 +165,8 @@ let g:JSLintHighlightErrorLine = 0
 " Powerline
 " let g:Powerline_symbols       = 'fancy'
 let g:Powerline_cache_enabled = 0
-" let g:Powerline_theme         = 'solarized256'
-" let g:Powerline_colorscheme   = 'solarized256'
+" let g:Powerline_theme         = 'solarized16'
+" let g:Powerline_colorscheme   = 'solarized16'
 
 " Stop fucking netrw
 let g:netrw_silent = 1
@@ -175,6 +183,30 @@ let NERDTreeHijackNetrw = 0
 let g:nerdtree_tabs_startup_cd=0
 " let g:nerdtree_tabs_open_on_console_startup=0
 " ca cd NERDTree
+
+" Parens
+let g:rbpt_colorpairs = [
+  \ ['brown',       'brown'],
+  \ ['darkblue',    'Darkblue'],
+  \ ['darkgray',    'darkgray'],
+  \ ['darkgreen',   'darkgreen'],
+  \ ['darkcyan',    'darkcyan'],
+  \ ['darkred',     'darkred'],
+  \ ['darkmagenta', 'darkmagenta'],
+  \ ['yellow',      'firebrick3'],
+  \ ['gray',        'gray'],
+  \ ['black',       'black'],
+  \ ['darkmagenta', 'darkmagenta'],
+  \ ['darkgreen',   'darkgreen'],
+  \ ['darkcyan',    'darkcyan'],
+  \ ['darkred',     'darkred'],
+  \ ['red',         'red'],
+\ ]
+let g:rbpt_loadcmd_toggle = 0
+" au VimEnter * RainbowParenthesesToggle
+" au Syntax * RainbowParenthesesLoadRound
+" au Syntax * RainbowParenthesesLoadSquare
+" au Syntax * RainbowParenthesesLoadBraces
 
 " Macvim from here
 let macvim_hig_shift_movement = 1

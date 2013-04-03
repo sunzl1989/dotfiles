@@ -14,7 +14,7 @@ from a terminal.
 ## Installation
 
 ```bash
-git clone https://github.com/DAddYE/dotfiles.git && cd dotfiles && ./bootstrap.sh
+git clone https://github.com/DAddYE/dotfiles.git && cd dotfiles && ./bootstrap
 ```
 
 To update, `cd` into your local `dotfiles` repository and then:

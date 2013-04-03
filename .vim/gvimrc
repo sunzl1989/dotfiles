@@ -1,6 +1,6 @@
 set anti
 set guioptions=gemc " egmrt
-set guifont=Source\ Code\ Pro\ for\ Powerline:h12
+set guifont=Source\ Code\ Pro:h12
 set vb
 
 " NerdTree Tabs
