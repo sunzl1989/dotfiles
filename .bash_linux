@@ -4,11 +4,11 @@
 # Set Lang
 export LC_ALL="en_US.UTF-8"
 
-function findpid() {
+findpid() {
   ps aux | grep $1 | awk '{print $2}'
 }
 
-function killmatch() {
+killmatch() {
   pid=$1; shift
   findpid $pid | xargs kill "$@"
 }
@@ -41,9 +41,3 @@ export HISTCONTROL=ignoredups
 # export RUBY_HEAP_FREE_MIN=500000
 # export RAILS_ENV=development
 # export RACK_ENV=development
-
-# Detective
-# [[ `which rbenv` ]] && eval "$(rbenv init -)"
-[[ `which npm` ]] && eval "$(npm completion -)"
-[[ `which grunt` ]] && eval "$(grunt --completion=bash)"
-[[ `which bower` ]] && eval "$(bower completion)"
