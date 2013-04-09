@@ -4,11 +4,11 @@
 # Set Lang
 export LC_ALL="en_US.UTF-8"
 
-function findpid(){
+function findpid() {
   ps aux | grep $1 | awk '{print $2}'
 }
 
-function killmatch(){
+function killmatch() {
   pid=$1; shift
   findpid $pid | xargs kill "$@"
 }
