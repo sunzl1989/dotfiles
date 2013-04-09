@@ -59,15 +59,19 @@ set directory=~/.vim/tmp/swap/        " where to put swap files.
 set backupskip=/tmp/*,/private/tmp/*  " make Vim able to edit crontab files again.
 set backup                            " enable backups
 set noswapfile                        " It's 2012, Vim.
-set undodir=~/.vim/undo/
-set undofile
+if exists("&undodir")
+  set undodir=~/.vim/undo/
+  set undofile
+endif
 
 set nostartofline " Don’t reset cursor to start of line when moving around.
 set esckeys " Allow cursor keys in insert mode
 set ttyfast " Optimize for fast terminal connections
 set isk+=_,$,@,%,#,- " none word dividers
 
-set cryptmethod=blowfish " https://coderwall.com/p/hypjbg
+if exists("&cryptmethod")
+  set cryptmethod=blowfish " https://coderwall.com/p/hypjbg
+endif
 
 " Time out on key codes but not mappings.
 " Basically this makes terminal Vim work sanely.
@@ -76,7 +80,9 @@ set ttimeout
 set ttimeoutlen=10
 
 " Write better
-set cc=100
+if exists("&cc")
+  set cc=100
+endif
 
 " Colors & C.
 set background=dark
