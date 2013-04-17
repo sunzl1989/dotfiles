@@ -1,7 +1,7 @@
 # Verbatim copy of janus
 
 module VIM
-  Dirs    = %w[ after autoload doc compiler plugin snippets syntax syntax_checkers ftdetect ftplugin colors indent nerdtree_plugin ]
+  Dirs    = %w[ after lib autoload doc compiler plugin snippets syntax syntax_checkers ftdetect ftplugin colors indent nerdtree_plugin ]
   VERSION = `vim --version`.scan(/VIM - Vi IMproved (\d)\.(\d)/).flatten.map(&:to_i)
   TmpDirs = %w[ tmp/repos tmp/backup tmp/swap ]
 end
