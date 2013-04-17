@@ -1,15 +1,18 @@
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'pp'
-require 'hirb'
 
 IRB.conf[:SAVE_HISTORY] = 500
 IRB.conf[:HISTORY_FILE] = File.expand_path('~/.irb_history')
 IRB.conf[:PROMPT_MODE]  = :SIMPLE
 
 # Hirb
-Hirb::Formatter.dynamic_config['ActiveRecord::Base']
-Hirb.enable
+begin
+  require 'hirb'
+  Hirb::Formatter.dynamic_config['ActiveRecord::Base']
+  Hirb.enable
+rescue
+end
 
 # http://ozmm.org/posts/time_in_irb.html
 def time(times = 1)
