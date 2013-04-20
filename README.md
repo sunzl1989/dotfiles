@@ -14,19 +14,19 @@ from a terminal.
 ## Installation
 
 ```bash
-git clone https://github.com/DAddYE/dotfiles.git && cd dotfiles && ./bootstrap
+git clone https://github.com/DAddYE/dotfiles.git && cd dotfiles && ./install.sh
 ```
 
 To update, `cd` into your local `dotfiles` repository and then:
 
 ```bash
-./bootstrap
+./install.sh
 ```
 
 Alternatively, to update while avoiding the confirmation prompt:
 
 ```bash
-./bootstrap
+./install.sh
 ```
 
 This also boostrap your vim, with sensible defaults for your terminal!
