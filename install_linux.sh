@@ -1,7 +1,7 @@
 ##
 # Install with:
 #
-#   $ curl -sL http://git.io/bTdvZw | bash
+#   $ curl -sL http://git.io/t5f0Pg | bash
 #
  
 cd ~
