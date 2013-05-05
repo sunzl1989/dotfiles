@@ -59,6 +59,7 @@ set directory=~/.vim/tmp/swap/        " where to put swap files.
 set backupskip=/tmp/*,/private/tmp/*  " make Vim able to edit crontab files again.
 set backup                            " enable backups
 set noswapfile                        " It's 2012, Vim.
+
 if exists("&undodir")
   set undodir=~/.vim/undo/
   set undofile
@@ -80,9 +81,7 @@ set ttimeout
 set ttimeoutlen=10
 
 " Write better
-if exists("&cc")
-  set cc=100
-endif
+set cc=100
 
 " Colors & C.
 set background=dark
@@ -131,6 +130,9 @@ let g:ctrlp_custom_ignore = {
       \ }
 
 
+" Use AG
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 " remember last location in file, but not for commit messages.
 au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
       \| exe "normal! g`\"" | endif
@@ -144,22 +146,22 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Guardfile,Vagrantfile,Thorfile,Do,dorc,D
 " Be sure to don't open markdown files with modula2 syntax
 " au BufRead,BufNewFile *.md set ft=markdown
 
-" add json syntax highlighting
+" Add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
 
-" make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+" Make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
 
-" nginx highlight
+" Nginx highlight
 augroup Nginx
   au BufRead,BufNewFile /etc/nginx/conf/* set ft=nginx
   au BufRead,BufNewFile /opt/nginx/conf/* set ft=nginx
 augroup END
 
-" clojure completions
-" augroup Clojure
-"   au Bufenter,Bufnewfile *.clj setl complete+=k~/.clj_completions
-" augroup END
+" Supertab config
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 
 " Enable syntastic syntax checking
 let g:syntastic_enable_signs   = 1
@@ -180,39 +182,15 @@ let g:netrw_quiet  = 1
 let g:loaded_netrw = 1
 
 " NERDTree configuration
-" let NERDTreeQuitOnOpen  = 0   " don't collapse NERDTree when a file is opened
+let NERDTreeQuitOnOpen  = 0   " don't collapse NERDTree when a file is opened
 let NERDTreeMinimalUI   = 1
 let NERDTreeDirArrows   = 0
 let NERDTreeChDirMode   = 0
 let NERDTreeIgnore      = ['\.pyc$', '\.rbc$', '\~$']
 let NERDTreeHijackNetrw = 0
-let g:nerdtree_tabs_startup_cd=0
+let g:nerdtree_tabs_startup_cd = 0
 " let g:nerdtree_tabs_open_on_console_startup=0
 " ca cd NERDTree
-
-" Parens
-let g:rbpt_colorpairs = [
-  \ ['brown',       'brown'],
-  \ ['darkblue',    'Darkblue'],
-  \ ['darkgray',    'darkgray'],
-  \ ['darkgreen',   'darkgreen'],
-  \ ['darkcyan',    'darkcyan'],
-  \ ['darkred',     'darkred'],
-  \ ['darkmagenta', 'darkmagenta'],
-  \ ['yellow',      'firebrick3'],
-  \ ['gray',        'gray'],
-  \ ['black',       'black'],
-  \ ['darkmagenta', 'darkmagenta'],
-  \ ['darkgreen',   'darkgreen'],
-  \ ['darkcyan',    'darkcyan'],
-  \ ['darkred',     'darkred'],
-  \ ['red',         'red'],
-\ ]
-let g:rbpt_loadcmd_toggle = 0
-" au VimEnter * RainbowParenthesesToggle
-" au Syntax * RainbowParenthesesLoadRound
-" au Syntax * RainbowParenthesesLoadSquare
-" au Syntax * RainbowParenthesesLoadBraces
 
 " Macvim from here
 let macvim_hig_shift_movement = 1
@@ -243,15 +221,6 @@ map tt :NERDTreeToggle<CR>
 map tb :TagbarToggle<CR>
 nmap <leader>ff ggVG=         " format the entire file
 nmap <leader>i :set list!<CR> " toggle [i]nvisible characters
-
-" Map the arrow keys to be based on display lines, not physical lines
-" nmap <Down> gj
-" nmap <Up> gk
-" vmap <Down> gj
-" vmap <Up> gk
-" This slow down mvim
-" imap <Down> <C-o>gj
-" imap <Up> <C-o>gk
 
 " CtrlP
 " Additional mapping for buffer search

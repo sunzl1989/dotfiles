@@ -51,14 +51,14 @@ export GOPATH="/usr/src/go"
 export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 export JRUBY_HOME="/Users/DAddYE/.rbenv/versions/jruby-1.7.2"
+export TORQUEBOX_HOME=~/.lein/immutant/current
+export PATH="$TORQUEBOX_HOME/jruby/bin:$PATH"
 
 # Allow insecure downloads
 export HTTP_CLIENT="wget --no-check-certificate -O" # or
 export HTTP_CLIENT="curl --insecure -f -L -o"
 
-if which drip > /dev/null; then
-  export JAVACMD=$(which drip)
-fi
+[[ `which drip` ]] && export JAVACMD=$(which drip)
 
 # RBX
 export RBXOPT=-X19

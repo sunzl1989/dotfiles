@@ -39,7 +39,11 @@ bundle 'scala',         'derekwyatt/vim-scala'
 bundle 'soda.vim',      'DAddYE/soda.vim'
 bundle 'markdown',      'plasticboy/vim-markdown'
 bundle 'clojure',       'guns/vim-clojure-static'
-# bundle 'rainbow',       'kien/rainbow_parentheses.vim'
+bundle 'cursors',       'terryma/vim-multiple-cursors'
+bundle 'fireplace',     'tpope/vim-fireplace'
+bundle 'ruby',          'vim-ruby/vim-ruby'
+bundle 'neocomplcache', 'Shougo/neocomplcache'
+bundle 'neosnippet',    'Shougo/neosnippet'
 
 bundle 'ar.snippets' do
   sh 'mkdir -p snippets/ruby'
