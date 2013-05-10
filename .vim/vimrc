@@ -81,7 +81,9 @@ set ttimeout
 set ttimeoutlen=10
 
 " Write better
-set cc=100
+if exists("&cc")
+  set cc=100
+endif
 
 " Colors & C.
 set background=dark
