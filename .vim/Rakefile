@@ -44,6 +44,7 @@ bundle 'fireplace',     'tpope/vim-fireplace'
 bundle 'ruby',          'vim-ruby/vim-ruby'
 bundle 'neocomplcache', 'Shougo/neocomplcache'
 bundle 'neosnippet',    'Shougo/neosnippet'
+bundle 'protobuf',      'uarun/vim-protobuf'
 
 bundle 'ar.snippets' do
   sh 'mkdir -p snippets/ruby'

@@ -3,4 +3,5 @@
                   [lein-pprint "1.1.1"]
                   [lein-immutant "0.18.1"]
                   [lein-kibit "0.0.8"]
-                  [lein-simpleton "1.1.0"]]}}
+                  [lein-simpleton "1.1.0"]
+                  [lein-autoreload "0.1.0"]]}}

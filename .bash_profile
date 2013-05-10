@@ -53,12 +53,16 @@ export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 export JRUBY_HOME="/Users/DAddYE/.rbenv/versions/jruby-1.7.2"
 export TORQUEBOX_HOME=~/.lein/immutant/current
 export PATH="$TORQUEBOX_HOME/jruby/bin:$PATH"
+export LEIN_FAST_TRAMPOLINE=1
 
 # Allow insecure downloads
 export HTTP_CLIENT="wget --no-check-certificate -O" # or
 export HTTP_CLIENT="curl --insecure -f -L -o"
 
-[[ `which drip` ]] && export JAVACMD=$(which drip)
+if [[ `which drip` ]]; then
+  export JAVACMD=$(which drip)
+  export LEIN_JAVA_CMD=$JAVACMD
+fi
 
 # RBX
 export RBXOPT=-X19
