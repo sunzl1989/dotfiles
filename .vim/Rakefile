@@ -45,7 +45,7 @@ bundle 'ruby',          'vim-ruby/vim-ruby'
 bundle 'neocomplcache', 'Shougo/neocomplcache'
 bundle 'neosnippet',    'Shougo/neosnippet'
 bundle 'protobuf',      'uarun/vim-protobuf'
-bundle 'base16',        '0chriskempson/base16-vim'
+bundle 'base16',        'chriskempson/base16-vim'
 
 bundle 'ar.snippets' do
   sh 'mkdir -p snippets/ruby'
