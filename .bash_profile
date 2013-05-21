@@ -1,5 +1,6 @@
 # Here my private stuff
 [ -r ~/.bash_custom ]  && source ~/.bash_custom
+[ -r ~/.bash_colors ]  && source ~/.bash_colors
 
 # Set Lang
 export LC_ALL="en_US.UTF-8"
@@ -54,6 +55,7 @@ export JRUBY_HOME="/Users/DAddYE/.rbenv/versions/jruby-1.7.2"
 export TORQUEBOX_HOME=~/.lein/immutant/current
 export PATH="$TORQUEBOX_HOME/jruby/bin:$PATH"
 export LEIN_FAST_TRAMPOLINE=1
+export CLJ_ENV="development"
 
 # Allow insecure downloads
 export HTTP_CLIENT="wget --no-check-certificate -O" # or
