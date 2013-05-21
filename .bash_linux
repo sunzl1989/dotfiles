@@ -1,7 +1,7 @@
 # Add this to your ~/.bash_profile
 # [ -r ~/.bash_linux ]  && . ~/.bash_linux
 
-[ -r ~/.bash_colors ] && . ~/bash_colors
+[ -r ~/.bash_colors ] && . ~/.bash_colors
 
 # Set Lang
 export LC_ALL="en_US.UTF-8"
