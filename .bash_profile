@@ -1,6 +1,6 @@
 # Here my private stuff
 [ -r ~/.bash_custom ]  && source ~/.bash_custom
-[ -r ~/.bash_colors ]  && source ~/.bash_colors
+# [ -r ~/.bash_colors ]  && source ~/.bash_colors
 
 # Set Lang
 export LC_ALL="en_US.UTF-8"

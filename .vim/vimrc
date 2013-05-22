@@ -87,8 +87,8 @@ endif
 
 " Colors & C.
 let base16colorspace=256  " Access colors present in 256 colorspace
-set background=dark
-colorscheme base16-tomorrow
+set background=light
+colorscheme soda
 
 " Make bolds match gui version
 " hi! Statement  cterm=bold
