@@ -69,7 +69,7 @@ fi
 # RBX
 export RBXOPT=-X19
 
-# Local (s)bin
+# Add some local bin
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:/Users/DAddYE/Library/Python/2.7/bin:$GOPATH/bin:$PATH"
 
 # Mov to Gif
@@ -106,14 +106,8 @@ export RACK_ENV=development
 
 # Detective
 [[ `which rbenv` ]] && eval "$(rbenv init -)"
-[[ `which npm` ]] && eval "$(npm completion -)"
+[[ `which npm` ]]   && eval "$(npm completion -)"
 [[ `which grunt` ]] && eval "$(grunt --completion=bash)"
 [[ `which bower` ]] && eval "$(bower completion)"
-
-# Brew stuff
-if which brew > /dev/null; then
-  [ -f $(brew --prefix)/etc/bash_completion ] && source $(brew --prefix)/etc/bash_completion
-  [ -f $(brew --prefix)/etc/profile.d/z.sh ]  && source $(brew --prefix)/etc/profile.d/z.sh
-  # For ruby-build
-  export CONFIGURE_OPTS="--disable-install-doc"
-fi
+[ -f /usr/local/etc/profile.d/z.sh ]  && . /usr/local/etc/profile.d/z.sh
+[ -f /usr/local/share/bash-completion/bash_completion ] && . /usr/local/share/bash-completion/bash_completion
