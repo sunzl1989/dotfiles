@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 cd "$(dirname "$0")"
 
 git pull
@@ -16,4 +16,4 @@ else
 fi
 
 unset doIt
-source ~/.bash_profile
+. ~/.bash_profile
