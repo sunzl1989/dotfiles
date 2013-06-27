@@ -49,13 +49,13 @@ export PATH="/usr/local/mysql/bin:$PATH"
 export GOPATH="/usr/src/go"
 
 # Java
-export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
-export JRUBY_HOME="/Users/DAddYE/.rbenv/versions/jruby-1.7.2"
-export TORQUEBOX_HOME=~/.lein/immutant/current
-export PATH="$TORQUEBOX_HOME/jruby/bin:$PATH"
-export LEIN_FAST_TRAMPOLINE=1
-export CLJ_ENV="development"
+# export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
+# export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+# export JRUBY_HOME="/Users/DAddYE/.rbenv/versions/jruby-1.7.2"
+# export TORQUEBOX_HOME=~/.lein/immutant/current
+# export PATH="$TORQUEBOX_HOME/jruby/bin:$PATH"
+# export LEIN_FAST_TRAMPOLINE=1
+# export CLJ_ENV="development"
 
 # Allow insecure downloads
 export HTTP_CLIENT="wget --no-check-certificate -O" # or
@@ -70,18 +70,7 @@ fi
 export RBXOPT=-X19
 
 # Add some local bin
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:/Users/DAddYE/Library/Python/2.7/bin:$GOPATH/bin:$PATH"
-
-# Mov to Gif
-gify() {
-  if [[ -n "$1" && -n "$2" ]]; then
-    ffmpeg -i $1 -pix_fmt rgb24 temp.gif
-    convert -layers Optimize temp.gif $2
-    rm temp.gif
-  else
-    echo "proper usage: gify <input_movie.mov> <output_file.gif>. You DO need to include extensions."
-  fi
-}
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$GOPATH/bin:$PATH"
 
 # Colorize
 export CLICOLOR=1
