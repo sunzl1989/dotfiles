@@ -1,5 +1,5 @@
 #!/bin/bash
-files=$(find . \( -path './.git' -o -name 'bootstrap' -o -name 'README.md' -o -name 'update' \) -prune -o -type f -print)
+files=$(find . \( -path './.git' -o -name 'bootstrap' -o -name 'README.md' -o -name 'update' -o -name 'install*' \) -prune -o -type f -print)
 
 for file in $files; do
   hfile=${file/./~}
