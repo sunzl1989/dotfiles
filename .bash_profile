@@ -42,18 +42,15 @@ alias rspec.one="RAILS_ENV=test rake db:setup &>/dev/null; bundle exec rspec"
 # Editor
 export EDITOR="vim"
 
-# Mysql
-export PATH="/usr/local/mysql/bin:$PATH"
-
 # Go
-export GOPATH="/usr/src/go"
+export GOROOT="/usr/src/go"
+export GOPATH="/usr/src/go-lib"
 
 # Java
 # export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
 # export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 # export JRUBY_HOME="/Users/DAddYE/.rbenv/versions/jruby-1.7.2"
-# export TORQUEBOX_HOME=~/.lein/immutant/current
-# export PATH="$TORQUEBOX_HOME/jruby/bin:$PATH"
+# export TORQUEBOX_HOME=~/.lein/immutant/current="$TORQUEBOX_HOME/jruby/bin:$PATH"
 # export LEIN_FAST_TRAMPOLINE=1
 # export CLJ_ENV="development"
 
@@ -70,7 +67,21 @@ fi
 export RBXOPT=-X19
 
 # Add some local bin
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$GOPATH/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$GOROOT/bin:$PATH"
+
+# Mov to Gif
+gify() {
+  if [[ -n "$1" && -n "$2" ]]; then
+    ffmpeg -i $1 -pix_fmt rgb24 temp.gif
+    convert -layers Optimize temp.gif $2
+    rm temp.gif
+  else
+    echo "proper usage: gify <input_movie.mov> <output_file.gif>. You DO need to include extensions."
+  fi
+}
+
+# Recursive match
+shopt -s globstar
 
 # Colorize
 export CLICOLOR=1
@@ -96,7 +107,5 @@ export RACK_ENV=development
 # Detective
 [[ `which rbenv` ]] && eval "$(rbenv init -)"
 [[ `which npm` ]]   && eval "$(npm completion -)"
-[[ `which grunt` ]] && eval "$(grunt --completion=bash)"
-[[ `which bower` ]] && eval "$(bower completion)"
 [ -f /usr/local/etc/profile.d/z.sh ]  && . /usr/local/etc/profile.d/z.sh
 [ -f /usr/local/share/bash-completion/bash_completion ] && . /usr/local/share/bash-completion/bash_completion
