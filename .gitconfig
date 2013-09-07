@@ -15,14 +15,7 @@
   get  = !git clone git@git.lipsiasoft.com:/$1.git
   open = !open http://$(basename $(pwd)).lipsiasoft.biz
   go   = checkout -B
-  switch    = !legit switch \"$@\"
-  branches  = !legit branches
-  sprout    = !legit sprout \"$@\"
-  unpublish = !legit unpublish \"$@\"
-  harvest   = !legit harvest \"$@\"
-  sync      = !legit sync \"$@\"
-  publish   = !legit publish \"$@\"
-  graft     = !legit graft \"$@\"
+  cleanup = !git clean -fXd
 [color]
   ui = auto
 [color "branch"]
