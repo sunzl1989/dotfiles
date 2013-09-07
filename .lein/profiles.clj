@@ -5,4 +5,5 @@
                   [lein-kibit "0.0.8"]
                   [lein-simpleton "1.1.0"]
                   [lein-autoreload "0.1.0"]
+                  [lein-localrepo "0.4.1"]
                   [speclj "2.5.0"]]}}
