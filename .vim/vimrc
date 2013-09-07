@@ -16,6 +16,7 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
+set textwidth=99
 
 set ruler
 set nowrap
@@ -33,7 +34,7 @@ set autoread
 set linebreak
 set hlsearch
 set incsearch
-set ignorecase
+" set ignorecase
 set smartcase
 set laststatus=2
 
@@ -46,7 +47,7 @@ set shell=/bin/sh
 set wildmode=list:longest,list:full  " Tab completion
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
-set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*,*/nimcache/*
 set wildignore+=*.swp,*~,._*
 
 set showcmd " Show (partial) command in the status line"
@@ -60,6 +61,12 @@ set directory=~/.vim/tmp/swap/        " where to put swap files.
 set backupskip=/tmp/*,/private/tmp/*  " make Vim able to edit crontab files again.
 set backup                            " enable backups
 set noswapfile                        " It's 2012, Vim.
+
+" Avoid formatting bullets
+set fo+=tcqln
+set fo-=r
+set fo-=o
+set flp=^\\s*\\d\\+\\.\\s\\+\\\|^[-*+]\\s\\+
 
 if exists("&undodir")
   set undodir=~/.vim/undo/
@@ -87,9 +94,10 @@ if exists("&cc")
 endif
 
 " Colors & C.
-let base16colorspace=256  " Access colors present in 256 colorspace
-set background=light
-colorscheme soda
+" set background=light
+" colorscheme soda
+set background=dark
+colorscheme base16-tomorrow
 
 " Make bolds match gui version
 " hi! Statement  cterm=bold
@@ -129,10 +137,9 @@ let g:task_paper_date_format = "%d/%m/%y %H:%M"
 " Ctrlp
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+      \ 'dir':  '\.git$\|\.hg$\|\.svn$\|nimcache$',
       \ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\|\.DS_Store'
       \ }
-
 
 " Use AG
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -163,6 +170,11 @@ au BufRead,BufNewFile /{etc,opt}/nginx/conf/* set ft=nginx
 au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
       \| exe "normal! g`\"" | endif
 
+au BufRead,BufNewFile *.wisp set ft=clojure
+
+" Vitality
+let g:always_assume_iterm = 0
+
 " Enable syntastic syntax checking
 let g:syntastic_enable_signs   = 1
 let g:syntastic_quiet_warnings = 1
@@ -189,11 +201,54 @@ let NERDTreeChDirMode   = 0
 let NERDTreeIgnore      = ['\.pyc$', '\.rbc$', '\~$']
 let NERDTreeHijackNetrw = 0
 let g:nerdtree_tabs_startup_cd = 0
-" let g:nerdtree_tabs_open_on_console_startup=0
-" ca cd NERDTree
+
+" Add a more detailed theme for airline
+let g:airline_theme = 'ubaryd'
 
 " Macvim from here
 let macvim_hig_shift_movement = 1
+
+" Neocomplcache
+let g:acp_enableAtStartup = 0
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 1
+let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1
+" let g:neocomplcache_disable_auto_complete = 1
+let g:neocomplcache_force_overwrite_completefunc = 1
+let g:neocomplcache_enable_auto_select = 1
+
+" Disable on cursor movements
+let g:neocomplcache_enable_insert_char_pre = 1
+
+" <TAB>: completion, like super-tab
+inoremap <expr><TAB>  pumvisible() ? "\<CR>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
+function! s:check_back_space()
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  " return neocomplcache#smart_close_popup() . "\<CR>"
+  return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+endfunction
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " Shortcuts
 imap <C-w> <Esc><C-w> " move through windows in insert mode
