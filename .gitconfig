@@ -12,9 +12,6 @@
   d    = diff
   l    = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue(%cr)%Cgreen[%cN]%Creset' --abbrev-commit --date=relative
   who  = shortlog -s -n --
-  get  = !git clone git@git.lipsiasoft.com:/$1.git
-  open = !open http://$(basename $(pwd)).lipsiasoft.biz
-  go   = checkout -B
   cleanup = !git clean -fXd
 [color]
   ui = auto
