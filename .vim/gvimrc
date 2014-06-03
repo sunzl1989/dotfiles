@@ -1,13 +1,14 @@
-set anti
+set antialias
 set guioptions=gemc " egmrt
-set guifont=Source\ Code\ Pro:h12
+set guifont=Source\ Code\ Pro\ Light:h12
 set vb
 
 " NerdTree Tabs
 let g:nerdtree_tabs_open_on_gui_startup=0
 
 " Colors & C.
-" colorscheme soda
+set background=dark
+colorscheme base16-eighties
 
 " set transparency=5
 
@@ -28,6 +29,12 @@ map <D-p> :CtrlP<CR>
 imap <D-p> <ESC>:CtrlP<CR>
 map <D-P> :CtrlPBuffer<CR>
 imap <D-P> <ESC>:CtrlPBuffer<CR>
+
+" Split panes
+map <D-d> :vs<CR>
+imap <D-d> <ESC>vs<CR>
+map <D-M-d> :sp<CR>
+imap <D-M-d> <ESC>:sp<CR>
 
 " Bubble single lines
 nmap <D-Up> [e

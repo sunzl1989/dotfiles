@@ -21,7 +21,7 @@ set textwidth=99
 set ruler
 set nowrap
 set list
-set listchars=tab:\ ·,trail:·
+set listchars=tab:\ \ ,trail:·
 set lazyredraw
 set matchtime=3
 set showbreak=↪
@@ -34,9 +34,10 @@ set autoread
 set linebreak
 set hlsearch
 set incsearch
-" set ignorecase
+set ignorecase
 set smartcase
 set laststatus=2
+set completeopt+=longest
 
 set clipboard+=unnamed " Share your clipboard with system
 set mouse=a            " Make mouse working!
@@ -52,8 +53,6 @@ set wildignore+=*.swp,*~,._*
 
 set showcmd " Show (partial) command in the status line"
 set showmode
-set completefunc=syntaxcomplete#Complete " Minitest autocompletion
-set ofu=syntaxcomplete#complete " omnicomplete
 
 set history=1000                      " Store lots of :cmdline history
 set backupdir=~/.vim/tmp/backup/      " where to put backup files.
@@ -96,12 +95,8 @@ endif
 " Colors & C.
 " set background=light
 " colorscheme soda
-
-" In case we use molokay
-let g:rehash256 = 1
-
 set background=dark
-colorscheme molokai
+colorscheme base16-tomorrow
 
 " Make bolds match gui version
 " hi! Statement  cterm=bold
@@ -120,7 +115,7 @@ filetype plugin indent on      " load the plugin and indent settings for the det
 let g:vim_markdown_folding_disabled=1
 
 " Change mapleader
-" let mapleader=","
+let mapleader=","
 
 " Verical bar in insert mode (for iTerm users only)
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -132,8 +127,42 @@ au FocusLost * :silent! wall
 " Resize splits when the window is resized
 au VimResized * :wincmd =
 
-" Set current chdir
-au VimEnter * silent! cd %:p:h
+" When we open a new session let's change the path
+au VimEnter * cd %:p:h
+
+" Go format
+" au FileType go autocmd BufWritePre <buffer> Fmt
+
+let g:tagbar_type_go = {
+      \ 'ctagstype' : 'go',
+      \ 'kinds'     : [
+      \ 'p:package',
+      \ 'i:imports:1',
+      \ 'c:constants',
+      \ 'v:variables',
+      \ 't:types',
+      \ 'n:interfaces',
+      \ 'w:fields',
+      \ 'e:embedded',
+      \ 'm:methods',
+      \ 'r:constructor',
+      \ 'f:functions'
+      \ ],
+      \ 'sro' : '.',
+      \ 'kind2scope' : {
+      \ 't' : 'ctype',
+      \ 'n' : 'ntype'
+      \ },
+      \ 'scope2kind' : {
+      \ 'ctype' : 't',
+      \ 'ntype' : 'n'
+      \ },
+      \ 'ctagsbin'  : 'gotags',
+      \ 'ctagsargs' : '-sort -silent'
+      \ }
+
+" Go imports
+let g:gofmt_command = "goimports"
 
 " Taskspaper
 let g:task_paper_date_format = "%d/%m/%y %H:%M"
@@ -148,8 +177,11 @@ let g:ctrlp_custom_ignore = {
 " Use AG
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-au FileType *    set expandtab   " others not
-au FileType make set noexpandtab " make uses real tabs"
+" Use goimports
+let g:gofmt_command = "goimports"
+
+au FileType make setlocal noexpandtab
+au FileType go   setlocal noexpandtab
 
 " Thorfile, Rakefile, GuardFile, Vagrantfile and Gemfile are Ruby
 au BufRead,BufNewFile {Gemfile,Rakefile,Guardfile,Vagrantfile,Thorfile,Do,dorc,Dofile,config.ru} set ft=ruby
@@ -161,7 +193,12 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Guardfile,Vagrantfile,Thorfile,Do,dorc,D
 au BufNewFile,BufRead *.json set ft=javascript
 
 " Make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+au FileType * set softtabstop=2 tabstop=2 shiftwidth=2 textwidth=100
+au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+au FileType go set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+au FileType igo set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+au FileType c set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+au FileType ooc set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
 
 " Git commits
 au Filetype gitcommit setlocal spell textwidth=72
@@ -174,7 +211,9 @@ au BufRead,BufNewFile /{etc,opt}/nginx/conf/* set ft=nginx
 au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
       \| exe "normal! g`\"" | endif
 
-au BufRead,BufNewFile *.wisp set ft=clojure
+" Iced coffee
+autocmd BufNewFile,BufRead *.iced set filetype=coffee
+syn match coffeeKeyword /\<\%(await\|defer\)\>/ display
 
 " Vitality
 let g:always_assume_iterm = 0
@@ -184,6 +223,9 @@ let g:syntastic_enable_signs   = 1
 
 " Turn off jslint errors by default
 let g:JSLintHighlightErrorLine = 0
+
+" Make sh a bit happier
+let g:is_bash=1
 
 " Stop fucking netrw
 let g:netrw_silent = 1
@@ -202,50 +244,44 @@ let g:nerdtree_tabs_startup_cd = 0
 " Add a more detailed theme for airline
 let g:airline_theme = 'ubaryd'
 
-" Macvim from here
-let macvim_hig_shift_movement = 1
-
 " Neocomplcache
 let g:acp_enableAtStartup = 0
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-" let g:neocomplcache_disable_auto_complete = 1
-let g:neocomplcache_force_overwrite_completefunc = 1
-let g:neocomplcache_enable_auto_select = 1
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
 
-" Disable on cursor movements
-let g:neocomplcache_enable_insert_char_pre = 1
-
-" <TAB>: completion, like super-tab
-inoremap <expr><TAB>  pumvisible() ? "\<CR>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
-function! s:check_back_space()
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-" <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  " return neocomplcache#smart_close_popup() . "\<CR>"
-  return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+  " return neocomplete#close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" GoLint
+set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+" au BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
 
 " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+au FileType css setlocal omnifunc=csscomplete#CompleteCSS
+au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+au FileType python setlocal omnifunc=pythoncomplete#Complete
+au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+au FileType ruby setlocal omnifunc=syntaxcomplete#Complete
 
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
+" Vimshell
+let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+let g:vimshell_prompt =  '$ '
+let g:vimshell_editor_command = 'mvim'
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
 endif
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " Shortcuts
 imap <C-w> <Esc><C-w> " move through windows in insert mode
@@ -270,17 +306,18 @@ map gp :Git push<CR>
 map rr :redraw! \| :NERDTree<CR>
 map cc :nohlsearch<CR>
 map tt :NERDTreeToggle<CR>
+map ff :NERDTreeFind<CR>
 map tb :TagbarToggle<CR>
 nmap <leader>ff ggVG=         " format the entire file
 nmap <leader>i :set list!<CR> " toggle [i]nvisible characters
 
 " CtrlP
 " Additional mapping for buffer search
-map <C-l> :CtrlPBufTag<CR>
-imap <C-l> <ESC>:CtrlPBufTag<CR>
+map <C-b> :CtrlPBufTag<CR>
+imap <C-b> <ESC>:CtrlPBufTag<CR>
 
-map <C-k> :CtrlPBuffer<CR>
-imap <C-k> <ESC>:CtrlPBuffer<CR>
+map <C-S-p> :CtrlPBuffer<CR>
+imap <C-S-p> <ESC>:CtrlPBuffer<CR>
 
 " Standard CtrlP also in insert mode
 imap <C-p> <ESC>:CtrlP<CR>
