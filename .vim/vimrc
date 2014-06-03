@@ -34,9 +34,10 @@ set autoread
 set linebreak
 set hlsearch
 set incsearch
-" set ignorecase
+set ignorecase
 set smartcase
 set laststatus=2
+set completeopt+=longest
 
 set clipboard+=unnamed " Share your clipboard with system
 set mouse=a            " Make mouse working!
@@ -52,8 +53,6 @@ set wildignore+=*.swp,*~,._*
 
 set showcmd " Show (partial) command in the status line"
 set showmode
-set completefunc=syntaxcomplete#Complete " Minitest autocompletion
-set ofu=syntaxcomplete#complete " omnicomplete
 
 set history=1000                      " Store lots of :cmdline history
 set backupdir=~/.vim/tmp/backup/      " where to put backup files.
@@ -120,7 +119,7 @@ filetype plugin indent on      " load the plugin and indent settings for the det
 let g:vim_markdown_folding_disabled=1
 
 " Change mapleader
-" let mapleader=","
+let mapleader=","
 
 " Verical bar in insert mode (for iTerm users only)
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -128,7 +127,10 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " Save when losing focus
 au FocusLost * :silent! wall
-"
+
+" When we open a new session let's change the path
+au VimEnter * cd %:p:h
+
 " Resize splits when the window is resized
 au VimResized * :wincmd =
 
@@ -160,8 +162,19 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Guardfile,Vagrantfile,Thorfile,Do,dorc,D
 " Add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
 
-" Make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+" Special settings for common languages
+au FileType * set softtabstop=2 tabstop=2 shiftwidth=2 textwidth=100
+au FileType make setlocal noexpandtab
+au FileType go   setlocal noexpandtab
+au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+au FileType go set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+au FileType igo set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+au FileType c set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+au FileType ooc set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+
+" Iced coffee
+autocmd BufNewFile,BufRead *.iced set filetype=coffee
+syn match coffeeKeyword /\<\%(await\|defer\)\>/ display
 
 " Git commits
 au Filetype gitcommit setlocal spell textwidth=72
@@ -175,6 +188,9 @@ au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= l
       \| exe "normal! g`\"" | endif
 
 au BufRead,BufNewFile *.wisp set ft=clojure
+
+" Make sh a bit happier
+let g:is_bash=1
 
 " Vitality
 let g:always_assume_iterm = 0
@@ -202,21 +218,18 @@ let g:nerdtree_tabs_startup_cd = 0
 " Add a more detailed theme for airline
 let g:airline_theme = 'ubaryd'
 
-" Macvim from here
-let macvim_hig_shift_movement = 1
-
 " Neocomplcache
 let g:acp_enableAtStartup = 0
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-" let g:neocomplcache_disable_auto_complete = 1
-let g:neocomplcache_force_overwrite_completefunc = 1
-let g:neocomplcache_enable_auto_select = 1
+let g:neocomplete_enable_at_startup = 1
+let g:neocomplete_enable_smart_case = 1
+let g:neocomplete_enable_camel_case_completion = 1
+let g:neocomplete_enable_underbar_completion = 1
+" let g:neocomplete_disable_auto_complete = 1
+let g:neocomplete_force_overwrite_completefunc = 1
+let g:neocomplete_enable_auto_select = 1
 
 " Disable on cursor movements
-let g:neocomplcache_enable_insert_char_pre = 1
+let g:neocomplete_enable_insert_char_pre = 1
 
 " <TAB>: completion, like super-tab
 inoremap <expr><TAB>  pumvisible() ? "\<CR>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
@@ -228,8 +241,8 @@ endfunction
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  " return neocomplcache#smart_close_popup() . "\<CR>"
-  return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+  " return neocomplete#smart_close_popup() . "\<CR>"
+  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 
 " Enable omni completion.
@@ -240,12 +253,12 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
+if !exists('g:neocomplete_omni_patterns')
+  let g:neocomplete_omni_patterns = {}
 endif
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+let g:neocomplete_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplete_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " Shortcuts
 imap <C-w> <Esc><C-w> " move through windows in insert mode
@@ -270,17 +283,24 @@ map gp :Git push<CR>
 map rr :redraw! \| :NERDTree<CR>
 map cc :nohlsearch<CR>
 map tt :NERDTreeToggle<CR>
+map ff :NERDTreeFind<CR>
 map tb :TagbarToggle<CR>
 nmap <leader>ff ggVG=         " format the entire file
 nmap <leader>i :set list!<CR> " toggle [i]nvisible characters
 
 " CtrlP
 " Additional mapping for buffer search
-map <C-l> :CtrlPBufTag<CR>
+map  <C-l> :CtrlPBufTag<CR>
 imap <C-l> <ESC>:CtrlPBufTag<CR>
 
-map <C-k> :CtrlPBuffer<CR>
+map  <C-k> :CtrlPBuffer<CR>
 imap <C-k> <ESC>:CtrlPBuffer<CR>
+
+map  <C-b> :CtrlPBufTag<CR>
+imap <C-b> <ESC>:CtrlPBufTag<CR>
+
+map  <C-S-p> :CtrlPBuffer<CR>
+imap <C-S-p> <ESC>:CtrlPBuffer<CR>
 
 " Standard CtrlP also in insert mode
 imap <C-p> <ESC>:CtrlP<CR>
