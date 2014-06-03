@@ -7,7 +7,7 @@ export LC_ALL="en_US.UTF-8"
 
 # Set a better prompt
 function parse_git_dirty {
-  [[ $(git status 2> /dev/null | tail -n 1) != "nothing to commit (working directory clean)" ]] && echo "*"
+  [[ $(git status 2> /dev/null | tail -n 1) != "nothing to commit, working directory clean" ]] && echo "*"
 }
 
 function parse_git_branch {
@@ -38,12 +38,20 @@ alias rebuild.launchservices="/System/Library/Frameworks/CoreServices.framework/
 alias locate.updatedb="sudo /usr/libexec/locate.updatedb"
 alias portal.rev="curl -sI https://portal.triggit.com/login | grep Revision | awk '{print \$2}' | tr -d '\r' | open https://github.com/triggit/triggit-rails/commit/\$(cat)"
 alias rspec.one="RAILS_ENV=test rake db:setup &>/dev/null; bundle exec rspec"
+alias ios="/Applications/Xcode.app/Contents/Applications/iPhone\ Simulator.app/Contents/MacOS/iPhone\ Simulator"
+alias be="bundle exec"
 
 # Editor
 export EDITOR="vim"
 
 # Go
 export GOPATH="/usr/src/go"
+
+# MRUBY
+export MRUBY="/usr/src/extras/mruby"
+
+# OOC
+export OOC_LIBS="/usr/src/ooc"
 
 # Java
 # export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
@@ -66,21 +74,13 @@ fi
 export RBXOPT=-X19
 
 # Add some local bin
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$GOROOT/bin:$PATH"
-
-# Mov to Gif
-gify() {
-  if [[ -n "$1" && -n "$2" ]]; then
-    ffmpeg -i $1 -pix_fmt rgb24 temp.gif
-    convert -layers Optimize temp.gif $2
-    rm temp.gif
-  else
-    echo "proper usage: gify <input_movie.mov> <output_file.gif>. You DO need to include extensions."
-  fi
-}
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$GOPATH/bin:$MRUBY/bin:$PATH:$OOC_LIBS/sam:$OOC_LIBS/rock/bin"
 
 # Recursive match
-# shopt -s globstar
+shopt -s globstar
+
+# After each command, save and reload history
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Colorize
 export CLICOLOR=1
@@ -92,14 +92,10 @@ export GREP_COLOR='1;33'
 # Larger bash history
 export HISTSIZE=32768
 export HISTFILESIZE=$HISTSIZE
-export HISTCONTROL=ignoredups
+export HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
 
 # Ruby
-# export RUBY_HEAP_MIN_SLOTS=1000000
-# export RUBY_HEAP_SLOTS_INCREMENT=1000000
-# export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-# export RUBY_GC_MALLOC_LIMIT=100000000
-# export RUBY_HEAP_FREE_MIN=500000
 export RAILS_ENV=development
 export RACK_ENV=development
 
@@ -107,4 +103,5 @@ export RACK_ENV=development
 [[ `which rbenv` ]] && eval "$(rbenv init -)"
 [[ `which npm` ]]   && eval "$(npm completion -)"
 [ -f /usr/local/etc/profile.d/z.sh ]  && . /usr/local/etc/profile.d/z.sh
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[ -f /usr/local/share/bash-completion/bash_completion ] && . /usr/local/share/bash-completion/bash_completion
+source /Users/DAddYE/.iterm2_shell_integration.bash
