@@ -7,11 +7,11 @@ export LC_ALL="en_US.UTF-8"
 
 # Set a better prompt
 function parse_git_dirty {
-  [[ $(git status 2> /dev/null | tail -n 1) != "nothing to commit (working directory clean)" ]] && echo "*"
+  [[ $(git status 2> /dev/null | tail -n 1) != "nothing to commit, working directory clean" ]] && echo "*"
 }
 
 function parse_git_branch {
-  [[ $(git status 2> /dev/null | tail -n 1) != "nothing to commit, working directory clean" ]] && echo "*"
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)] /"
 }
 
 function findpid {
