@@ -43,8 +43,7 @@ alias rspec.one="RAILS_ENV=test rake db:setup &>/dev/null; bundle exec rspec"
 export EDITOR="vim"
 
 # Go
-export GOROOT="/usr/src/go"
-export GOPATH="/usr/src/go-lib"
+export GOPATH="/usr/src/go"
 
 # Java
 # export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
@@ -81,7 +80,7 @@ gify() {
 }
 
 # Recursive match
-shopt -s globstar
+# shopt -s globstar
 
 # Colorize
 export CLICOLOR=1
@@ -96,11 +95,11 @@ export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
 
 # Ruby
-export RUBY_HEAP_MIN_SLOTS=1000000
-export RUBY_HEAP_SLOTS_INCREMENT=1000000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=100000000
-export RUBY_HEAP_FREE_MIN=500000
+# export RUBY_HEAP_MIN_SLOTS=1000000
+# export RUBY_HEAP_SLOTS_INCREMENT=1000000
+# export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+# export RUBY_GC_MALLOC_LIMIT=100000000
+# export RUBY_HEAP_FREE_MIN=500000
 export RAILS_ENV=development
 export RACK_ENV=development
 
@@ -108,4 +107,4 @@ export RACK_ENV=development
 [[ `which rbenv` ]] && eval "$(rbenv init -)"
 [[ `which npm` ]]   && eval "$(npm completion -)"
 [ -f /usr/local/etc/profile.d/z.sh ]  && . /usr/local/etc/profile.d/z.sh
-[ -f /usr/local/share/bash-completion/bash_completion ] && . /usr/local/share/bash-completion/bash_completion
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion

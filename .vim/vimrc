@@ -96,8 +96,12 @@ endif
 " Colors & C.
 " set background=light
 " colorscheme soda
+
+" In case we use molokay
+let g:rehash256 = 1
+
 set background=dark
-colorscheme base16-tomorrow
+colorscheme molokai
 
 " Make bolds match gui version
 " hi! Statement  cterm=bold
@@ -177,16 +181,9 @@ let g:always_assume_iterm = 0
 
 " Enable syntastic syntax checking
 let g:syntastic_enable_signs   = 1
-let g:syntastic_quiet_warnings = 1
 
 " Turn off jslint errors by default
 let g:JSLintHighlightErrorLine = 0
-
-" Powerline
-" let g:Powerline_symbols       = 'fancy'
-let g:Powerline_cache_enabled = 0
-" let g:Powerline_theme         = 'solarized16'
-" let g:Powerline_colorscheme   = 'solarized16'
 
 " Stop fucking netrw
 let g:netrw_silent = 1
