@@ -1,7 +1,6 @@
 # vim: ft=ruby
 
 PLUGINS = %w[
-  pry-rails
   pry-doc
   pry-git
   pry-stack_explorer
