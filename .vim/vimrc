@@ -92,15 +92,11 @@ if exists("&cc")
   set cc=100
 endif
 
-" Colors & C.
-" set background=light
-" colorscheme soda
-
 " In case we use molokay
 let g:rehash256 = 1
 
 set background=dark
-colorscheme molokai
+colorscheme soda " base16-eighties | molokai
 
 " Make bolds match gui version
 " hi! Statement  cterm=bold
@@ -110,7 +106,6 @@ colorscheme molokai
 let g:indent_guides_auto_colors=1
 let g:indent_guides_enable_on_vim_startup=0
 " hi IndentGuidesOdd  guibg=#f1f1f1 ctermbg=255
-
 
 filetype plugin indent on      " load the plugin and indent settings for the detected filetype
 " runtime! macros/matchit.vim  " % to bounce from do to end etc.
@@ -218,32 +213,22 @@ let g:nerdtree_tabs_startup_cd = 0
 " Add a more detailed theme for airline
 let g:airline_theme = 'ubaryd'
 
-" Neocomplcache
+" Neocomplete
 let g:acp_enableAtStartup = 0
-let g:neocomplete_enable_at_startup = 1
-let g:neocomplete_enable_smart_case = 1
-let g:neocomplete_enable_camel_case_completion = 1
-let g:neocomplete_enable_underbar_completion = 1
-" let g:neocomplete_disable_auto_complete = 1
-let g:neocomplete_force_overwrite_completefunc = 1
-let g:neocomplete_enable_auto_select = 1
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
 
-" Disable on cursor movements
-let g:neocomplete_enable_insert_char_pre = 1
-
-" <TAB>: completion, like super-tab
-inoremap <expr><TAB>  pumvisible() ? "\<CR>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
-function! s:check_back_space()
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-" <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  " return neocomplete#smart_close_popup() . "\<CR>"
+  " return neocomplete#close_popup() . "\<CR>"
+  " For no inserting <CR> key.
   return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -251,14 +236,6 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete_omni_patterns')
-  let g:neocomplete_omni_patterns = {}
-endif
-let g:neocomplete_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplete_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplete_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " Shortcuts
 imap <C-w> <Esc><C-w> " move through windows in insert mode

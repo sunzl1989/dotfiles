@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 git pull
 
 function doIt() {
-  rsync --exclude ".git/" --exclude "extra/" --exclude ".DS_Store" --exclude "update" --exclude "bootstrap" --exclude "README.md" -av . ~
+  rsync --exclude ".git/" --exclude ".DS_Store" --exclude "update" --exclude "install.sh" --exclude "install_linux.sh" --exclude "README.md" -av . ~
   cd ~/.vim && rake
 }
 
