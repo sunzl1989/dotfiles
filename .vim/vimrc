@@ -142,6 +142,9 @@ let g:ctrlp_custom_ignore = {
       \ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\|\.DS_Store'
       \ }
 
+" Set the snippets for golang
+let g:go_snippet_engine = "neosnippet"
+
 " Use AG
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -284,3 +287,32 @@ imap <C-p> <ESC>:CtrlP<CR>
 
 " Use :W! to write to a file using sudo if you forgot to 'sudo vim file'
 ca W! %!sudo tee > /dev/null %
+
+" TODO: remove once this is done: https://github.com/fatih/vim-go/issues/91
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : expand('$HOME/.vim-go/gotags'),
+    \ 'ctagsargs' : '-sort -silent'
+\ }

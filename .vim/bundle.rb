@@ -88,9 +88,7 @@ def bundle(name, repo=nil)
             sh "sh install.sh"
           else
             subdirs.each do |subdir|
-              if File.exists?(subdir)
-                sh "cp -RfL #{subdir}/* #{cwd}/#{subdir}/"
-              end
+              sh "cp -RfL #{subdir}/* #{cwd}/#{subdir}/" if File.exists?(subdir)
             end
           end
           yield if block_given?

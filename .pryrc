@@ -12,13 +12,17 @@ PLUGINS = %w[
   readline
 ]
 
-begin
-  PLUGINS.each(&method(:require))
-rescue LoadError => e
-  puts "Failed loading: #{e.message}"
-  puts
-  puts "Please install pry plugins with:"
-  puts "  gem install " << PLUGINS.join(' ')
+PLUGINS.each do |name|
+  begin
+    require name
+  rescue LoadError
+    puts "\e[31mFailed\e[0m loading '#{name}'"
+    @load_error = true
+  end
+end
+
+if @load_error
+  puts "\e[2mInstall them with `gem` or add them in `bundler` (if needed)\e[0m"
 end
 
 ##
@@ -31,7 +35,7 @@ Pry.editor = ENV['EDITOR'] || 'vim'
 Pry.config.print = ->(output, value) do
   pretty = value.ai(indent: 2)
   Pry::Helpers::BaseHelpers.stagger_output("=> #{pretty}", output)
-end
+end if String.respond_to?(:ai)
 
 # Friendlier prompt - line number, app name, nesting levels look like
 # directory paths.
