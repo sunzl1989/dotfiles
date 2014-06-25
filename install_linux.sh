@@ -7,7 +7,7 @@ cd ~
 
 for dotfile in inputrc irbrc ackrc bash_linux bash_colors tmux.conf; do
   echo "> Installing ~/.$dotfile"
-  curl -sO https://raw.github.com/DAddYE/dotfiles/master/.$dotfile
+  curl -sOL https://raw.github.com/DAddYE/dotfiles/master/.$dotfile
 done
 
 bootstrap="[ -r ~/.bash_linux ] && . ~/.bash_linux"
@@ -24,7 +24,7 @@ cd ~/.vim
 
 for vimfile in Rakefile bundle.rb vimrc gvimrc; do
   echo "> Installing ~/.vim/$vimfile"
-  curl -sO https://raw.github.com/DAddYE/dotfiles/master/.vim/$vimfile
+  curl -sOL https://raw.github.com/DAddYE/dotfiles/master/.vim/$vimfile
 done
 
 echo "> Setup vim"
