@@ -31,18 +31,15 @@ alias ls="ls -alhG"
 alias update="sudo softwareupdate -i -a -v; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; gem update; cd ~/.vim && rake && cd -"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias cleanup.ds_store="find . -type f -name '*.DS_Store' -ls -delete"
-alias cleanup.user.cache="rm -rf ~/Library/Caches/*; sudo rm -rf /Library/Caches/*;"
-alias cleanup.system.cache="sudo rm -rf /System/Library/Caches/* && echo && echo 'You must reboot to rebuild ktext and fonts...'"
 alias cleanup.brew="brew cleanup"
 alias rebuild.launchservices="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user"
 alias locate.updatedb="sudo /usr/libexec/locate.updatedb"
-alias portal.rev="curl -sI https://portal.triggit.com/login | grep Revision | awk '{print \$2}' | tr -d '\r' | open https://github.com/triggit/triggit-rails/commit/\$(cat)"
-alias rspec.one="RAILS_ENV=test rake db:setup &>/dev/null; bundle exec rspec"
 
 # Editor
 export EDITOR="vim"
 
 # Go
+export GOROOT=$(go env GOROOT)
 export GOPATH="/usr/src/go"
 
 # MRUBY
@@ -72,7 +69,7 @@ fi
 export RBXOPT=-X19
 
 # Add some local bin
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$GOPATH/bin:$MRUBY/bin:$PATH:$OOC_LIBS/sam:$OOC_LIBS/rock/bin"
+export PATH="/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$GOROOT/bin:$MRUBY/bin:$OOC_LIBS/sam:$OOC_LIBS/rock/bin:$HOME/.cabal/bin:$PATH"
 
 # Recursive match
 # shopt -s globstar
