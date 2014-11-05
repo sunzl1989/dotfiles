@@ -28,7 +28,7 @@ export PS1='\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]$\[\033[00m\] '
 # Utilities
 alias ls="ls -alhG"
 # alias tail="tail -f -n 150"
-alias update="sudo softwareupdate -i -a -v; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; gem update; cd ~/.vim && rake && cd -"
+alias update="sudo softwareupdate -i -a -v; brew update; brew upgrade; brew cleanup; gem update; cd ~/.vim && rake && cd -"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias cleanup.ds_store="find . -type f -name '*.DS_Store' -ls -delete"
 alias cleanup.brew="brew cleanup"
@@ -39,8 +39,12 @@ alias locate.updatedb="sudo /usr/libexec/locate.updatedb"
 export EDITOR="vim"
 
 # Go
-export GOROOT=$(go env GOROOT)
+export GOROOT=
 export GOPATH="/usr/src/go"
+export GOROOT=$(go env GOROOT)
+
+launchctl setenv GOROOT $GOROOT
+launchctl setenv GOPATH $GOPATH
 
 # MRUBY
 export MRUBY="/usr/src/mruby"
@@ -93,6 +97,5 @@ export RACK_ENV=development
 
 # Detective
 [[ `which rbenv` ]] && eval "$(rbenv init -)"
-[[ `which npm` ]]   && eval "$(npm completion -)"
 [ -f /usr/local/etc/profile.d/z.sh ]  && . /usr/local/etc/profile.d/z.sh
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion

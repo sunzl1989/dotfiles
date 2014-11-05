@@ -23,7 +23,6 @@ pkg/*
 *.log
 *.sql
 *.sqlite
-log/*
 tmp/*
 
 # OS generated files
@@ -48,3 +47,7 @@ Gemfile.lock
 
 # Node
 # node_modules/
+#
+# Idea
+*.iml
+.idea

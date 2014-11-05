@@ -1,6 +1,6 @@
 set nocompatible
 syntax on
-set nospell
+set spell
 set number
 set numberwidth=5
 
@@ -37,7 +37,9 @@ set incsearch
 set ignorecase
 set smartcase
 set laststatus=2
-set completeopt+=longest
+" set completeopt+=longest
+set completeopt-=preview
+
 
 set clipboard+=unnamed " Share your clipboard with system
 set mouse=a            " Make mouse working!
@@ -62,9 +64,9 @@ set backup                            " enable backups
 set noswapfile                        " It's 2012, Vim.
 
 " Avoid formatting bullets
-set fo+=tcqln
-set fo-=r
-set fo-=o
+set fo+=tcqlnr
+" set fo-=r
+" set fo-=o
 set flp=^\\s*\\d\\+\\.\\s\\+\\\|^[-*+]\\s\\+
 
 if exists("&undodir")
@@ -135,22 +137,14 @@ au VimEnter * silent! cd %:p:h
 " Taskspaper
 let g:task_paper_date_format = "%d/%m/%y %H:%M"
 
-" Ctrlp
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$\|nimcache$',
-      \ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\|\.DS_Store'
-      \ }
-
 " Set the snippets for golang
 let g:go_snippet_engine = "neosnippet"
+let g:go_fmt_command = "goimports"
 
-au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <leader>r  <Plug>(go-run)
-au FileType go nmap <leader>b  <Plug>(go-build)
-au FileType go nmap <leader>t  <Plug>(go-test)
+au FileType go nmap <Leader>s <Plug>(go-implements)
 au FileType go nmap gt <Plug>(go-def)
-
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 " Use AG
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -170,15 +164,16 @@ au BufNewFile,BufRead *.json set ft=javascript
 au FileType * set softtabstop=2 tabstop=2 shiftwidth=2 textwidth=100
 au FileType make setlocal noexpandtab
 au FileType go   setlocal noexpandtab
-au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
 au FileType go set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
-au FileType igo set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
+au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
 au FileType c set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
 au FileType ooc set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=100
 
 " Iced coffee
 autocmd BufNewFile,BufRead *.iced set filetype=coffee
 syn match coffeeKeyword /\<\%(await\|defer\)\>/ display
+
+" au BufWritePre,FileWritePre *.c :%!astyle --style=allman -n -H -U -xj
 
 " Git commits
 au Filetype gitcommit setlocal spell textwidth=72
@@ -215,7 +210,7 @@ let NERDTreeQuitOnOpen  = 0   " don't collapse NERDTree when a file is opened
 let NERDTreeMinimalUI   = 1
 let NERDTreeDirArrows   = 0
 let NERDTreeChDirMode   = 0
-let NERDTreeIgnore      = ['\.pyc$', '\.rbc$', '\~$']
+let NERDTreeIgnore      = ['\.pyc$', '\.rbc$', '\~$', '\.iml']
 let NERDTreeHijackNetrw = 0
 let g:nerdtree_tabs_startup_cd = 0
 
@@ -231,6 +226,16 @@ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
   return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
+
+" Rust
+" let g:racer_cmd = "/usr/src/rust/racer/bin/racer"
+" let $RUST_SRC_PATH="/usr/src/rust/rust-lang"
+
+" Golang
+let g:go_highlight_operators=1
+let g:go_highlight_functions=1
+let g:go_highlight_methods=1
+let g:go_highlight_structs=1
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -279,6 +284,46 @@ nmap <leader>ff ggVG=         " format the entire file
 nmap <leader>i :set list!<CR> " toggle [i]nvisible characters
 
 " CtrlP
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_by_filename = 1
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\.git$\|\.hg$\|\.svn$\|nimcache$',
+      \ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\|\.DS_Store',
+      \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+      \ }
+
+let g:ctrlp_buftag_types = {
+\ 'go'     	   : '--language-force=go --golang-types=ftv',
+\ 'coffee'     : '--language-force=coffee --coffee-types=cmfvf',
+\ 'markdown'   : '--language-force=markdown --markdown-types=hik',
+\ 'objc'       : '--language-force=objc --objc-types=mpci',
+\ 'rc'         : '--language-force=rust --rust-types=fTm'
+\ }
+
+" Clang complete for neocomplete
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_overwrite_completefunc = 1
+let g:neocomplete#force_omni_input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+let g:neocomplete#force_omni_input_patterns.objc = '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)'
+let g:neocomplete#force_omni_input_patterns.objcpp = '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)\|\h\w*::\w*'
+let g:clang_complete_auto = 0
+let g:clang_auto_select = 0
+"let g:clang_use_library = 1
+
+let g:jsx_pragma_required=0
+
+" Clang format
+let g:clang_format#auto_format = 1
+let g:clang_format#style_options = {
+    \ 'BasedOnStyle': 'llvm',
+    \ 'ColumnLimit' : 100,
+    \ 'BreakBeforeBraces' : 'Stroustrup',
+    \ }
+    " \ 'AlwaysBreakAfterDefinitionReturnType': 'true',
+
 " Additional mapping for buffer search
 map  <C-k> :CtrlPBuffer<CR>
 imap <C-k> <ESC>:CtrlPBuffer<CR>

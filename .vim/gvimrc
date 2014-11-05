@@ -8,7 +8,7 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 
 " Colors & C.
 set background=dark
-colorscheme molokai " base16-eighties
+colorscheme base16-eighties
 
 " set transparency=5
 

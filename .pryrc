@@ -3,14 +3,12 @@
 PLUGINS = %w[
   pry-doc
   pry-git
-  pry-stack_explorer
   pry-remote
-  pry-byebug
-  hirb
-  coolline
   awesome_print
   readline
 ]
+# pry-byebug
+# pry-stack_explorer
 
 PLUGINS.each do |name|
   begin
@@ -32,7 +30,7 @@ Pry.editor = ENV['EDITOR'] || 'vim'
 
 # Use awesome_print for output, but keep pry's pager. If Hirb is
 # enabled, try printing with it first.
-Pry.config.print = ->(output, value) do
+Pry.config.print = ->(output, value, _pry_) do
   pretty = value.ai(indent: 2)
   Pry::Helpers::BaseHelpers.stagger_output("=> #{pretty}", output)
 end if String.respond_to?(:ai)
