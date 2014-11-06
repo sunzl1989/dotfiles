@@ -28,7 +28,7 @@ export PS1='\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]$\[\033[00m\] '
 # Utilities
 alias ls="ls -alhG"
 # alias tail="tail -f -n 150"
-alias update="sudo softwareupdate -i -a -v; brew update; brew upgrade; brew cleanup; gem update; cd ~/.vim && rake && cd -"
+alias update="sudo softwareupdate -i -a -v; brew update; brew upgrade; brew cleanup; gem update; vim +BundleUpdate +qall"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias cleanup.ds_store="find . -type f -name '*.DS_Store' -ls -delete"
 alias cleanup.brew="brew cleanup"
