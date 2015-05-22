@@ -27,8 +27,11 @@ export PS1='\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]$\[\033[00m\] '
 
 # Utilities
 alias ls="ls -alhG"
+alias vim="nvim"
+
 # alias tail="tail -f -n 150"
-alias update="sudo softwareupdate -i -a -v; brew update; brew upgrade; brew cleanup; gem update; vim +BundleUpdate +qall"
+# sudo softwareupdate -i -a -v;
+alias update="brew update; brew upgrade --all; brew cleanup; nvim +BundleUpdate +qall"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias cleanup.ds_store="find . -type f -name '*.DS_Store' -ls -delete"
 alias cleanup.brew="brew cleanup"
@@ -36,10 +39,9 @@ alias rebuild.launchservices="/System/Library/Frameworks/CoreServices.framework/
 alias locate.updatedb="sudo /usr/libexec/locate.updatedb"
 
 # Editor
-export EDITOR="vim"
+export EDITOR="nvim"
 
 # Go
-export GOROOT=
 export GOPATH="/usr/src/go"
 export GOROOT=$(go env GOROOT)
 
@@ -51,6 +53,12 @@ export MRUBY="/usr/src/mruby"
 
 # OOC
 export OOC_LIBS="/usr/src/ooc"
+
+# Node/Npm
+export NODE_PATH="/usr/local/lib/node_modules"
+
+# .NET (yes, dot net)
+source dnvm.sh
 
 # Java
 # export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
