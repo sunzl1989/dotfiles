@@ -46,7 +46,7 @@ export PATH="~/bin:$PATH"
 # Git/Npm credentials
 # Not in the repository, to prevent people from accidentally committing under my name
 GIT_AUTHOR_NAME="Davide D'Agostino"
-GIT_AUTHOR_EMAIL="d.dagostino@lipsiasoft.com"
+GIT_AUTHOR_EMAIL="info@daddye.it"
 GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
 GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 git config --global user.name "$GIT_AUTHOR_NAME"
