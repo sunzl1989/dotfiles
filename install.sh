@@ -5,7 +5,9 @@ git pull
 
 function doIt() {
   rsync --exclude ".git/" --exclude ".DS_Store" --exclude "update" --exclude "install.sh" --exclude "install_linux.sh" --exclude "README.md" -av . ~
-  cd ~/.vim && rake
+  cd ~/.vim
+  git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  vim +PluginInstall +qall
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
