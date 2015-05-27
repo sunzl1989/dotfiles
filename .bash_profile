@@ -1,6 +1,6 @@
 # Here my private stuff
+
 [ -r ~/.bash_custom ]  && source ~/.bash_custom
-# [ -r ~/.bash_colors ]  && source ~/.bash_colors
 
 # Set Lang
 export LC_ALL="en_US.UTF-8"
@@ -27,11 +27,11 @@ export PS1='\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]$\[\033[00m\] '
 
 # Utilities
 alias ls="ls -alhG"
-alias vim="nvim"
+# alias vim="nvim"
 
 # alias tail="tail -f -n 150"
 # sudo softwareupdate -i -a -v;
-alias update="brew update; brew upgrade --all; brew cleanup; nvim +BundleUpdate +qall"
+alias update="update-uber-home.sh; brew update; brew upgrade --all; brew cleanup; nvim +BundleUpdate +qall"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias cleanup.ds_store="find . -type f -name '*.DS_Store' -ls -delete"
 alias cleanup.brew="brew cleanup"
@@ -39,14 +39,19 @@ alias rebuild.launchservices="/System/Library/Frameworks/CoreServices.framework/
 alias locate.updatedb="sudo /usr/libexec/locate.updatedb"
 
 # Editor
-export EDITOR="nvim"
+if [[ `which nvim` ]]; then
+	export EDITOR="nvim"
+else
+	export EDITOR="vim"
+fi
 
 # Go
-export GOPATH="/usr/src/go"
-export GOROOT=$(go env GOROOT)
-
-launchctl setenv GOROOT $GOROOT
-launchctl setenv GOPATH $GOPATH
+if [[ `which rbenv` ]]; then
+	export GOPATH="/usr/src/go"
+	export GOROOT=$(go env GOROOT)
+	launchctl setenv GOROOT $GOROOT
+	launchctl setenv GOPATH $GOPATH
+fi
 
 # MRUBY
 export MRUBY="/usr/src/mruby"
@@ -58,7 +63,7 @@ export OOC_LIBS="/usr/src/ooc"
 export NODE_PATH="/usr/local/lib/node_modules"
 
 # .NET (yes, dot net)
-source dnvm.sh
+# source dnvm.sh
 
 # Java
 # export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
@@ -81,7 +86,7 @@ fi
 export RBXOPT=-X19
 
 # Add some local bin
-export PATH="/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$GOROOT/bin:$MRUBY/bin:$OOC_LIBS/sam:$OOC_LIBS/rock/bin:$HOME/.cabal/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$GOROOT/bin:$MRUBY/bin:$OOC_LIBS/sam:$OOC_LIBS/rock/bin:$HOME/.cabal/bin:$HOME/bin:$PATH"
 
 # Recursive match
 # shopt -s globstar
@@ -103,7 +108,9 @@ shopt -s histappend
 export RAILS_ENV=development
 export RACK_ENV=development
 
-# Detective
+# Load completions and others things
 [[ `which rbenv` ]] && eval "$(rbenv init -)"
 [ -f /usr/local/etc/profile.d/z.sh ]  && . /usr/local/etc/profile.d/z.sh
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[ -f /usr/local/bin/virtualenvwrapper.sh ] && . /usr/local/bin/virtualenvwrapper.sh
+[ -f $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh

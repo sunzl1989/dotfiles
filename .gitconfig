@@ -31,11 +31,9 @@
 [merge]
   log = true
   tool = vimdiff
-[url "git@github.com:/"]
-  insteadOf = "gh:/"
 [user]
   name = Davide D'Agostino
-  email = info@daddye.it
+  email = daddye@uber.com
 [push]
   default = simple
 [gist]
@@ -57,3 +55,7 @@
   clean = git hawser clean %f
   smudge = git hawser smudge %f
   required = true
+[branch]
+  autosetuprebase = always
+[rerere]
+  enabled = true
