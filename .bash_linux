@@ -1,22 +1,32 @@
+# vim:ft=sh
 # Add this to your ~/.bash_profile
 # [ -r ~/.bash_linux ]  && . ~/.bash_linux
 
 # Set Lang
 export LC_ALL="en_US.UTF-8"
 
-findpid() {
+# Set a better prompt
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n 1) != "nothing to commit, working directory clean" ]] && echo "*"
+}
+
+function parse_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)] /"
+}
+
+function findpid {
   ps aux | grep $1 | awk '{print $2}'
 }
 
-killmatch() {
+function killmatch {
   pid=$1; shift
   findpid $pid | xargs kill "$@"
 }
 
+export PS1='\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]#\[\033[00m\] '
+
 # Utilities
 alias ls="ls -alh --color=auto"
-alias tail="tail -fn 150"
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # Editor
 export EDITOR="vim"
@@ -29,15 +39,7 @@ export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;33'
 
 # Larger bash history
-export HISTSIZE=32768
+export HISTSIZE="" # Infinite
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
-
-# Ruby
-# export RUBY_HEAP_MIN_SLOTS=1000000
-# export RUBY_HEAP_SLOTS_INCREMENT=1000000
-# export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-# export RUBY_GC_MALLOC_LIMIT=100000000
-# export RUBY_HEAP_FREE_MIN=500000
-# export RAILS_ENV=development
-# export RACK_ENV=development
+shopt -s histappend

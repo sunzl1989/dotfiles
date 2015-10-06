@@ -4,7 +4,7 @@
   browser = open
 [alias]
   s    = status
-  c    = !git add . && git commit -a && git push
+  c    = !git add . && git commit -a
   fuck = !git commit --amend && git push --force
   br   = branch
   co   = checkout
@@ -31,6 +31,8 @@
 [merge]
   log = true
   tool = vimdiff
+[url "git@github.com:/"]
+  insteadOf = "gh:/"
 [user]
   name = Davide D'Agostino
   email = daddye@uber.com
@@ -55,7 +57,13 @@
   clean = git hawser clean %f
   smudge = git hawser smudge %f
   required = true
-[branch]
-  autosetuprebase = always
 [rerere]
   enabled = true
+[url "ssh://git@github.com/uber/"]
+  insteadOf = https://github.com/uber/
+[pull]
+  rebase = true
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true

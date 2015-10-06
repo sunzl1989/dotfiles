@@ -50,14 +50,17 @@ Bundle 'eagletmt/neco-ghc'
 Bundle 'eagletmt/ghcmod-vim'
 Bundle 'wting/rust.vim'
 Bundle 'cespare/vim-toml'
-Bundle 'Rip-Rip/clang_complete'
-Bundle 'rhysd/vim-clang-format'
 Bundle 'mxw/vim-jsx'
 Bundle 'elubow/cql-vim'
+Bundle 'klen/python-mode'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'jordwalke/flatlandia'
+Bundle 'terryma/vim-expand-region'
+Bundle 'tpope/vim-sleuth'
+Bundle 'solarnz/thrift.vim'
+Bundle 'morhetz/gruvbox'
 
 call vundle#end()
 filetype plugin indent on
@@ -101,7 +104,7 @@ set incsearch
 set ignorecase
 set smartcase
 set laststatus=2
-set completeopt=longest,preview,menuone
+set completeopt=longest,menuone
 set omnifunc=syntaxcomplete#Complete
 
 set clipboard+=unnamed " Share your clipboard with system
@@ -161,13 +164,13 @@ endif
 let g:rehash256 = 1
 
 set background=dark
-colorscheme base16-eighties " molokai
+colorscheme gruvbox " base16-eighties " molokai
 
 " Disable markdown floading
 let g:vim_markdown_folding_disabled=1
 
 " Change mapleader
-let mapleader=","
+let mapleader="\<Space>"
 
 " Verical bar in insert mode (for iTerm users only)
 if has("nvim")
@@ -315,18 +318,28 @@ map <C-S-Right> gt
 imap <C-S-Left> <Esc>gT
 imap <C-S-Right> <Esc>gt
 
-" Personal Shortcuts for go
+" Python
+let g:pymode_rope_goto_definition_bind = '<Leader>gt'
+let g:pymode_folding = 0
+let g:pymode_options_max_line_length = 100
+let g:pymode_lint_checkers = ['pyflakes', 'pep8']
+let g:pymode_rope_show_doc_bind = '<Leader>gd'
+let g:pymode_rope_autoimport_import_after_complete = 1
+let g:pymode_rope_organize_imports_bind = '<Leader>is'
+
+" Go
 au FileType go nmap <Leader>gt <Plug>(go-def)
 
 " Terminal
 if has('nvim')
-	tnoremap <Esc> <C-\><C-n>
-	tnoremap <C-S-Left> <C-\><C-n>gT
-	tnoremap <C-S-Right> <C-\><C-n>gt
-	tnoremap <C-w>h <C-\><C-n><C-w>h
-	tnoremap <C-w>j <C-\><C-n><C-w>j
-	tnoremap <C-w>k <C-\><C-n><C-w>k
-	tnoremap <C-w>l <C-\><C-n><C-w>l
+  let g:terminal_color_256=1
+  tnoremap <Leader>e <C-\><C-n>
+  tnoremap <C-S-Left> <C-\><C-n>gT
+  tnoremap <C-S-Right> <C-\><C-n>gt
+  tnoremap <C-w>h <C-\><C-n><C-w>h
+  tnoremap <C-w>j <C-\><C-n><C-w>j
+  tnoremap <C-w>k <C-\><C-n><C-w>k
+  tnoremap <C-w>l <C-\><C-n><C-w>l
 endif
 " nnoremap <C-S-Left> <C-w>h
 " nnoremap <C-S-Down> <C-w>j
@@ -334,11 +347,11 @@ endif
 " nnoremap <C-S-Right> <C-w>l
 
 " Some personal shortcuts
-nmap <leader>gc :!git add . && git commit -a && git push<CR>
 nmap <leader>zz :ZoomWin<CR>
 nmap <leader>gs :Gstatus<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gp :Git push<CR>
+nmap <leader>gc :Git c<CR>
 nmap <leader>rr :redraw! \| :NERDTree<CR>
 nmap <leader>cc :nohlsearch<CR>
 nmap <leader>tt :NERDTreeTabsToggle<CR>
@@ -346,31 +359,33 @@ nmap <leader>ff :NERDTreeTabsFind<CR>
 nmap <leader>tb :TagbarToggle<CR>
 nmap <leader>ff ggVG=         " format the entire file
 nmap <leader>i :set list!<CR> " toggle [i]nvisible characters
+nmap <Leader>o :CtrlP<CR>
+nmap <Leader>w :w<CR>
+nmap <Leader>q :q<CR>
+vmap p "_dP
 
 " CtrlP
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_by_filename = 0
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$\|nimcache$\|node_modules$\|bower_components$\|build$',
-      \ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\|\.DS_Store',
-      \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
-      \ }
 
-let g:ctrlp_buftag_types = {
-\ 'go'     	   : '--language-force=go --golang-types=ftv',
-\ 'coffee'     : '--language-force=coffee --coffee-types=cmfvf',
-\ 'markdown'   : '--language-force=markdown --markdown-types=hik',
-\ 'objc'       : '--language-force=objc --objc-types=mpci',
-\ 'rc'         : '--language-force=rust --rust-types=fTm'
-\ }
+" if executable('fzf')
+"   let g:ctrlp_use_caching = 0
+"   let g:ctrlp_user_command = 'cd %s && find . -not \( -name .git -type d -prune \) -type f'
+"   let g:ctrlp_match_func = { 'match': 'ZFZMatch' }
 
-let g:jsx_pragma_required=0
+"   function! ZFZMatch(items, str, limit, mmode, ispath, crfile, regex)
+"     let cmd = 'fzf -f \"'.a:str.'\"'
+"     return split(system(cmd), "\n")
+"   endfunction
+" endif
+
+let g:jsx_pragma_required = 0
 
 " Clang format
 let g:clang_format#auto_format = 1
 let g:clang_format#style_options = {
     \ 'BasedOnStyle': 'llvm',
-    \ 'ColumnLimit' : 100,
+    \ 'ColumnLimit': 100,
     \ 'BreakBeforeBraces' : 'Stroustrup',
     \ }
     " \ 'AlwaysBreakAfterDefinitionReturnType': 'true',
@@ -381,12 +396,6 @@ imap <C-k> <ESC>:CtrlPBuffer<CR>
 
 map  <C-b> :CtrlPBufTag<CR>
 imap <C-b> <ESC>:CtrlPBufTag<CR>
-
-map  <C-S-p> :CtrlPBuffer<CR>
-imap <C-S-p> <ESC>:CtrlPBuffer<CR>
-
-" Standard CtrlP also in insert mode
-imap <C-p> <ESC>:CtrlP<CR>
 
 " Use :W! to write to a file using sudo if you forgot to 'sudo vim file'
 ca W! %!sudo tee > /dev/null %

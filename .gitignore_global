@@ -12,6 +12,7 @@ Thumbs.db
 # Rbx
 *.rbx
 .rbx/
+*.tmp
 
 # Sass
 .sass-cache/
@@ -25,3 +26,5 @@ NERD_tree_*
 # Idea
 *.iml
 .idea
+.ropeproject
+.ropeproject/config.py .ropeproject/globalnames .ropeproject/history .ropeproject/objectdb

@@ -31,7 +31,7 @@ alias ls="ls -alhG"
 
 # alias tail="tail -f -n 150"
 # sudo softwareupdate -i -a -v;
-alias update="update-uber-home.sh; brew update; brew upgrade --all; brew cleanup; nvim +BundleUpdate +qall"
+alias update="brew update; brew upgrade --all; brew cleanup; nvim +BundleUpdate +qall"
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias cleanup.ds_store="find . -type f -name '*.DS_Store' -ls -delete"
 alias cleanup.brew="brew cleanup"
@@ -45,12 +45,16 @@ else
 	export EDITOR="vim"
 fi
 
+# Source files
+export SRC=~/.src
+
 # Go
-if [[ `which rbenv` ]]; then
-	export GOPATH="/usr/src/go"
+if [[ `which go` ]]; then
+	export GOPATH=$SRC/go/
 	export GOROOT=$(go env GOROOT)
 	launchctl setenv GOROOT $GOROOT
 	launchctl setenv GOPATH $GOPATH
+	export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 fi
 
 # MRUBY
@@ -62,9 +66,6 @@ export OOC_LIBS="/usr/src/ooc"
 # Node/Npm
 export NODE_PATH="/usr/local/lib/node_modules"
 
-# .NET (yes, dot net)
-# source dnvm.sh
-
 # Java
 # export JRUBY_OPTS="-Xcompile.invokedynamic=true -J-server -J-Xmn512m -J-Xms2048m -J-Xmx2048m"
 # export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
@@ -74,7 +75,6 @@ export NODE_PATH="/usr/local/lib/node_modules"
 # export CLJ_ENV="development"
 
 # Allow insecure downloads
-export HTTP_CLIENT="wget --no-check-certificate -O" # or
 export HTTP_CLIENT="curl --insecure -f -L -o"
 
 if [[ `which drip` ]]; then
@@ -82,11 +82,9 @@ if [[ `which drip` ]]; then
   export LEIN_JAVA_CMD=$JAVACMD
 fi
 
-# RBX
-export RBXOPT=-X19
 
 # Add some local bin
-export PATH="/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$GOROOT/bin:$MRUBY/bin:$OOC_LIBS/sam:$OOC_LIBS/rock/bin:$HOME/.cabal/bin:$HOME/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH"
 
 # Recursive match
 # shopt -s globstar
@@ -99,7 +97,7 @@ export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;33'
 
 # Larger bash history
-export HISTSIZE=32768
+export HISTSIZE="" # Infinite
 export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
@@ -113,4 +111,3 @@ export RACK_ENV=development
 [ -f /usr/local/etc/profile.d/z.sh ]  && . /usr/local/etc/profile.d/z.sh
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && . /usr/local/bin/virtualenvwrapper.sh
-[ -f $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
