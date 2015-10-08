@@ -10,7 +10,7 @@ for dotfile in inputrc irbrc ackrc bash_linux bash_colors tmux.conf; do
   curl -sOL https://raw.github.com/DAddYE/dotfiles/master/.$dotfile
 done
 
-bootstrap="[ -r ~/.bash_linux ] && . ~/.bash_linux"
+bootstrap="[[ -r ~/.bash_linux ]] && . ~/.bash_linux"
 
 if [ -z "`cat ~/.bash_profile | grep bash_linux`" ]; then
   echo -e "> Adding \033[1m$bootstrap\033[0m at bottom of your \033[1m~/.bash_profile\033[0m"
@@ -22,13 +22,14 @@ cd - > /dev/null
 mkdir -p ~/.vim
 cd ~/.vim
 
-for vimfile in Rakefile bundle.rb vimrc gvimrc; do
+for vimfile in vimrc; do
   echo "> Installing ~/.vim/$vimfile"
   curl -sOL https://raw.github.com/DAddYE/dotfiles/master/.vim/$vimfile
 done
 
 echo "> Setup vim"
-rake
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
 
 cd - > /dev/null
 
