@@ -9,7 +9,8 @@ Bundle 'gmarik/Vundle.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'kien/ctrlp.vim'
-Bundle 'bling/vim-airline.git'
+Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
 Bundle 'mileszs/ack.vim'
 Bundle 'tpope/vim-haml'
 Bundle 'DAddYE/vim-slim'
@@ -61,6 +62,7 @@ Bundle 'terryma/vim-expand-region'
 Bundle 'tpope/vim-sleuth'
 Bundle 'solarnz/thrift.vim'
 Bundle 'morhetz/gruvbox'
+Bundle 'marijnh/tern_for_vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -114,7 +116,7 @@ set modelines=10
 set shell=/bin/sh
 
 set wildmode=list:longest,list:full  " Tab completion
-set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.class,.svn,*.gem
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.class,.svn,*.gem,Godeps,node_modules
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*,*/nimcache/*
 set wildignore+=*.swp,*~,._*
@@ -271,7 +273,7 @@ let g:nerdtree_tabs_open_on_gui_startup = 0
 
 
 " Add a more detailed theme for airline
-let g:airline_theme = 'ubaryd'
+let g:airline_theme = 'tomorrow'
 
 " Rust
 " let g:racer_cmd = "/usr/src/rust/racer/bin/racer"

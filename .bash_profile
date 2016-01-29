@@ -25,19 +25,6 @@ function killmatch {
 
 export PS1='\W \[\033[32m\]$(parse_git_branch)\[\033[00;01m\]$\[\033[00m\] '
 
-# Utilities
-alias ls="ls -alhG"
-# alias vim="nvim"
-
-# alias tail="tail -f -n 150"
-# sudo softwareupdate -i -a -v;
-alias update="brew update; brew upgrade --all; brew cleanup; nvim +BundleUpdate +qall"
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias cleanup.ds_store="find . -type f -name '*.DS_Store' -ls -delete"
-alias cleanup.brew="brew cleanup"
-alias rebuild.launchservices="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user"
-alias locate.updatedb="sudo /usr/libexec/locate.updatedb"
-
 # Editor
 if [[ `which nvim` ]]; then
 	export EDITOR="nvim"
@@ -45,12 +32,24 @@ else
 	export EDITOR="vim"
 fi
 
+# Utilities
+alias ls="ls -alhG"
+
+# alias tail="tail -f -n 150"
+# sudo softwareupdate -i -a -v;
+alias update="brew update; brew upgrade --all; brew cleanup; vim +BundleUpdate +qall"
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias cleanup.ds_store="find . -type f -name '*.DS_Store' -ls -delete"
+alias cleanup.brew="brew cleanup"
+alias rebuild.launchservices="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user"
+alias locate.updatedb="sudo /usr/libexec/locate.updatedb"
+
 # Source files
 export SRC=~/.src
 
 # Go
 if [[ `which go` ]]; then
-	export GOPATH=$SRC/go/
+	export GOPATH=$SRC/go
 	export GOROOT=$(go env GOROOT)
 	launchctl setenv GOROOT $GOROOT
 	launchctl setenv GOPATH $GOPATH
@@ -105,6 +104,11 @@ shopt -s histappend
 # Ruby
 export RAILS_ENV=development
 export RACK_ENV=development
+
+# Node
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
 
 # Load completions and others things
 [[ `which rbenv` ]] && eval "$(rbenv init -)"
