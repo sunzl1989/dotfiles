@@ -28,3 +28,7 @@ NERD_tree_*
 .idea
 .ropeproject
 .ropeproject/config.py .ropeproject/globalnames .ropeproject/history .ropeproject/objectdb
+
+# Devbox
+_incomplete
+udeploy/provision

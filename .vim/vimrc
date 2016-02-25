@@ -63,6 +63,7 @@ Bundle 'tpope/vim-sleuth'
 Bundle 'solarnz/thrift.vim'
 Bundle 'morhetz/gruvbox'
 Bundle 'marijnh/tern_for_vim'
+Bundle 'kopischke/vim-fetch'
 
 call vundle#end()
 filetype plugin indent on
@@ -365,6 +366,7 @@ nmap <Leader>o :CtrlP<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
 vmap p "_dP
+vmap \\ gc
 
 " CtrlP
 let g:ctrlp_working_path_mode = 'ra'
