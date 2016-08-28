@@ -62,7 +62,7 @@ Bundle 'terryma/vim-expand-region'
 Bundle 'tpope/vim-sleuth'
 Bundle 'solarnz/thrift.vim'
 Bundle 'morhetz/gruvbox'
-Bundle 'marijnh/tern_for_vim'
+Bundle 'ternjs/tern_for_vim'
 Bundle 'kopischke/vim-fetch'
 
 call vundle#end()
@@ -132,6 +132,10 @@ set backupskip=/tmp/*,/private/tmp/*  " make Vim able to edit crontab files agai
 set nobackup                            " enable backups
 set noswapfile                        " It's 2012, Vim.
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
 " Avoid formatting bullets
 set fo+=tcqlnr
 " set fo-=r
@@ -200,10 +204,6 @@ au VimEnter * silent! cd %:p:h
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 
-" Set the snippets for golang
-let g:go_snippet_engine = "ultisnips"
-let g:go_fmt_command = "goimports"
-
 " Play nice with YCM
 " let g:UltiSnipsJumpForwardTrigger="<tab>"
 " let g:UltiSnipsListSnippets="<c-e>"
@@ -257,6 +257,13 @@ let g:syntastic_enable_signs   = 1
 " Turn off jslint errors by default
 let g:JSLintHighlightErrorLine = 0
 
+" Syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+
 " Stop fucking netrw
 let g:netrw_silent = 1
 let g:netrw_quiet  = 1
@@ -285,6 +292,21 @@ let g:go_highlight_operators=1
 let g:go_highlight_functions=1
 let g:go_highlight_methods=1
 let g:go_highlight_structs=1
+let g:go_highlight_types=1
+let g:go_highlight_extra_type=1
+let g:go_def_mode = 'godef'
+let g:go_decls_includes = "func"
+" let g:go_auto_sameids = 1
+let g:go_snippet_engine = "ultisnips"
+let g:go_fmt_command = "goimports"
+let g:go_snippet_case_type = "camelcase"
+let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
+" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+
+au FileType go nmap <Leader>gt <Plug>(go-def)
+
+" Javascript
+
 
 " For snippet_complete marker.
 if has('conceal')
@@ -330,9 +352,6 @@ let g:pymode_rope_show_doc_bind = '<Leader>gd'
 let g:pymode_rope_autoimport_import_after_complete = 1
 let g:pymode_rope_organize_imports_bind = '<Leader>is'
 
-" Go
-au FileType go nmap <Leader>gt <Plug>(go-def)
-
 " Terminal
 if has('nvim')
   let g:terminal_color_256=1
@@ -372,16 +391,19 @@ vmap \\ gc
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_by_filename = 0
 
-" if executable('fzf')
-"   let g:ctrlp_use_caching = 0
-"   let g:ctrlp_user_command = 'cd %s && find . -not \( -name .git -type d -prune \) -type f'
-"   let g:ctrlp_match_func = { 'match': 'ZFZMatch' }
-
-"   function! ZFZMatch(items, str, limit, mmode, ispath, crfile, regex)
-"     let cmd = 'fzf -f \"'.a:str.'\"'
-"     return split(system(cmd), "\n")
-"   endfunction
-" endif
+" TODO: add javascript and some other languages who doesn't have ctags support
+" coffee: https://gist.github.com/michaelglass/5210282
+" go: http://stackoverflow.com/a/8236826/462233 
+" objc:  http://www.gregsexton.org/2011/04/objective-c-exuberant-ctags-regex/
+" rust: https://github.com/mozilla/rust/blob/master/src/etc/ctags.rust
+" SOURCE: https://github.com/fatih/subvim/blob/master/vim/base/vimrc#L175
+let g:ctrlp_buftag_types = {
+\ 'go'     	   : '--language-force=go --golang-types=ftv',
+\ 'coffee'     : '--language-force=coffee --coffee-types=cmfvf',
+\ 'markdown'   : '--language-force=markdown --markdown-types=hik',
+\ 'objc'       : '--language-force=objc --objc-types=mpci',
+\ 'rc'         : '--language-force=rust --rust-types=fTm'
+\ }
 
 let g:jsx_pragma_required = 0
 
@@ -395,11 +417,11 @@ let g:clang_format#style_options = {
     " \ 'AlwaysBreakAfterDefinitionReturnType': 'true',
 
 " Additional mapping for buffer search
-map  <C-k> :CtrlPBuffer<CR>
-imap <C-k> <ESC>:CtrlPBuffer<CR>
+map  <C-b> :CtrlPBuffer<CR>
+imap <C-b> <ESC>:CtrlPBuffer<CR>
 
-map  <C-b> :CtrlPBufTag<CR>
-imap <C-b> <ESC>:CtrlPBufTag<CR>
+map  <C-t> :CtrlPBufTag<CR>
+imap <C-t> <ESC>:CtrlPBufTag<CR>
 
 " Use :W! to write to a file using sudo if you forgot to 'sudo vim file'
 ca W! %!sudo tee > /dev/null %

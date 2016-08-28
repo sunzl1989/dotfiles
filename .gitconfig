@@ -67,3 +67,9 @@
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
   required = true
+[branch]
+	autosetuprebase = always
+[url "ssh://gitolite@code.uber.internal/"]
+	insteadOf = git://code.uber.internal/
+[url "ssh://gitolite@code.uber.internal:2222/"]
+	insteadOf = https://code.uber.internal/
