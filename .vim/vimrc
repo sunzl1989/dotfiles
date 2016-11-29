@@ -265,9 +265,9 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 
 " Stop fucking netrw
-let g:netrw_silent = 1
-let g:netrw_quiet  = 1
-let g:loaded_netrw = 1
+" let g:netrw_silent = 1
+" let g:netrw_quiet  = 1
+" let g:loaded_netrw = 1
 
 " NERDTree configuration
 let NERDTreeQuitOnOpen  = 0   " don't collapse NERDTree when a file is opened
@@ -296,6 +296,7 @@ let g:go_highlight_types=1
 let g:go_highlight_extra_type=1
 let g:go_def_mode = 'godef'
 let g:go_decls_includes = "func"
+let g:go_def_mapping_enabled=0
 " let g:go_auto_sameids = 1
 let g:go_snippet_engine = "ultisnips"
 let g:go_fmt_command = "goimports"
@@ -374,16 +375,16 @@ nmap <leader>gs :Gstatus<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gp :Git push<CR>
 nmap <leader>gc :Git c<CR>
-nmap <leader>rr :redraw! \| :NERDTree<CR>
+nmap <leader>rr :redraw!<CR>
 nmap <leader>cc :nohlsearch<CR>
 nmap <leader>tt :NERDTreeTabsToggle<CR>
-nmap <leader>ff :NERDTreeTabsFind<CR>
 nmap <leader>tb :TagbarToggle<CR>
 nmap <leader>ff ggVG=         " format the entire file
 nmap <leader>i :set list!<CR> " toggle [i]nvisible characters
 nmap <Leader>o :CtrlP<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
+nmap \\ gc<RIGHT>
 vmap p "_dP
 vmap \\ gc
 
@@ -411,7 +412,7 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
+  let g:ctrlp_user_command = 'ag -Q -l --nocolor -g "" %s'
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
@@ -439,6 +440,8 @@ imap <C-b> <ESC>:CtrlPBuffer<CR>
 
 map  <C-t> :CtrlPBufTag<CR>
 imap <C-t> <ESC>:CtrlPBufTag<CR>
+
+map  <C-i> :GoInfo<CR>
 
 " Use :W! to write to a file using sudo if you forgot to 'sudo vim file'
 ca W! %!sudo tee > /dev/null %
