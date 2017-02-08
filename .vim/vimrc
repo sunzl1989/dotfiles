@@ -19,7 +19,8 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'tpope/vim-commentary'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'wavded/vim-stylus'
-Bundle 'scrooloose/syntastic'
+" Bundle 'scrooloose/syntastic'
+Bundle 'w0rp/ale'
 Bundle 'tpope/vim-fugitive'
 Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-surround'
@@ -64,6 +65,7 @@ Bundle 'solarnz/thrift.vim'
 Bundle 'morhetz/gruvbox'
 Bundle 'ternjs/tern_for_vim'
 Bundle 'kopischke/vim-fetch'
+Bundle 'solarnz/arcanist.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -133,7 +135,8 @@ set nobackup                            " enable backups
 set noswapfile                        " It's 2012, Vim.
 
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%{ALEGetStatusLine()}
 set statusline+=%*
 
 " Avoid formatting bullets
@@ -288,16 +291,20 @@ let g:airline_theme = 'tomorrow'
 " let $RUST_SRC_PATH="/usr/src/rust/rust-lang"
 
 " Golang
-let g:go_highlight_operators=1
-let g:go_highlight_functions=1
-let g:go_highlight_methods=1
-let g:go_highlight_structs=1
-let g:go_highlight_types=1
-let g:go_highlight_extra_type=1
+let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_highlight_extra_type = 1
+let g:go_highlight_format_strings = 1
 let g:go_def_mode = 'godef'
 let g:go_decls_includes = "func"
-let g:go_def_mapping_enabled=0
-" let g:go_auto_sameids = 1
+let g:go_def_mapping_enabled = 1
+let g:go_auto_sameids = 0
+let g:go_auto_type_info = 0
+let g:go_fmt_experimental = 1
+let g:go_gocode_unimported_packages = 1
 let g:go_snippet_engine = "ultisnips"
 let g:go_fmt_command = "goimports"
 let g:go_snippet_case_type = "camelcase"
@@ -343,6 +350,9 @@ map <C-S-Left> gT
 map <C-S-Right> gt
 imap <C-S-Left> <Esc>gT
 imap <C-S-Right> <Esc>gt
+
+" Markdown
+let g:vim_markdown_conceal = 0
 
 " Python
 let g:pymode_rope_goto_definition_bind = '<Leader>gt'
@@ -438,8 +448,8 @@ let g:clang_format#style_options = {
 map  <C-b> :CtrlPBuffer<CR>
 imap <C-b> <ESC>:CtrlPBuffer<CR>
 
-map  <C-t> :CtrlPBufTag<CR>
-imap <C-t> <ESC>:CtrlPBufTag<CR>
+map  <C-k> :CtrlPBufTag<CR>
+imap <C-k> <ESC>:CtrlPBufTag<CR>
 
 map  <C-i> :GoInfo<CR>
 
